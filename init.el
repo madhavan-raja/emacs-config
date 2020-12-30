@@ -36,13 +36,6 @@
 (menu-bar-mode -1)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Tabs
-; (setq-default indent-tabs-mode nil)
-; (setq-default tab-width 4)
-; (setq c-set-style "k&r")
-; (setq c-basic-offset 4)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 ;; Font
 (set-face-attribute 'default nil
 		    :font "Fira Code"
@@ -79,7 +72,14 @@
 (use-package all-the-icons)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Rainbow delimiters
+;; Parenthesis
+(show-paren-mode 1)
+(setq show-paren-delay 0)
+(require 'paren)
+(set-face-background 'show-paren-match (face-background 'default))
+(set-face-foreground 'show-paren-match "#def")
+(set-face-attribute 'show-paren-match nil :weight 'extra-bold)
+
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -100,7 +100,6 @@
          :map ivy-reverse-i-search-map
          ("C-k" . ivy-previous-line)
          ("C-d" . ivy-reverse-i-search-kill))
-  ; :demand
   :config
   (ivy-mode 1))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -169,16 +168,4 @@
 (add-hook 'c++-mode (global-set-key (kbd "<f9>") 'compile))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(flymake-google-cpplint iedit yasnippet-snippets yasnippet auto-complete visual-fill-column org-bullets use-package rainbow-delimiters ivy-rich evil-collection doom-themes doom-modeline counsel command-log-mode)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+(setq custom-file (expand-file-name ".custom" user-emacs-directory))

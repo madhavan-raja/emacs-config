@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: vt
+# key: vt
+# --
+vector<${1:ll}> ${2:a}(${3:n})

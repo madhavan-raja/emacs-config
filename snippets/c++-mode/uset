@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: uset
+# key: uset
+# --
+unordered_set<${1:ll}> ${2:a}

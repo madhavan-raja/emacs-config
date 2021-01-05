@@ -1,0 +1,7 @@
+#+TITLE: Emacs Configurations
+
+* Installation
+Clone this repository into =.emacs.d=
+#+BEGIN_SRC bash
+git clone https://github.com/madhavan-raja/emacs-config.git ./.emacs.d
+#+END_SRC

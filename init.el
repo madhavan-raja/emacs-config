@@ -82,6 +82,8 @@
 (set-face-foreground 'show-paren-match "#def")
 (set-face-attribute 'show-paren-match nil :weight 'extra-bold)
 
+(electric-pair-mode 1)
+
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

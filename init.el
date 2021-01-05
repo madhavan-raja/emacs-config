@@ -34,6 +34,8 @@
 (tooltip-mode -1)
 (set-fringe-mode 10)
 (menu-bar-mode -1)
+
+(global-visual-line-mode t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Font
@@ -166,6 +168,18 @@
 (add-hook 'c-mode-common-hook 'google-make-newline-indent)
 
 (add-hook 'c++-mode (global-set-key (kbd "<f9>") 'compile))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Org-mode
+(add-hook 'org-mode-hook 'org-indent-mode)
+(add-hook 'org-mode-hook 'org-toggle-pretty-entities)
+
+(use-package org-bullets)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Darkroom-mode
+(use-package darkroom)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq custom-file (expand-file-name ".custom" user-emacs-directory))

@@ -32,7 +32,7 @@
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (tooltip-mode -1)
-(set-fringe-mode 10)
+(set-fringe-mode 0)
 (menu-bar-mode -1)
 
 (global-visual-line-mode t)
@@ -169,7 +169,7 @@
 (add-hook 'c-mode-common-hook 'google-set-c-style)
 (add-hook 'c-mode-common-hook 'google-make-newline-indent)
 
-(add-hook 'c++-mode (global-set-key (kbd "<f9>") 'compile))
+(add-hook 'c++-mode (global-set-key (kbd "<f9>") 'recompile))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Org-mode
@@ -182,6 +182,10 @@
 
 ;; Darkroom-mode
 (use-package darkroom)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Magit
+(use-package magit)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq custom-file (expand-file-name ".custom" user-emacs-directory))

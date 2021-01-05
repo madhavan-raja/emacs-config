@@ -8,6 +8,10 @@
 (setq make-backup-files nil)
 (setq visible-bell t)
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+(setq
+ split-width-threshold 0
+ split-height-threshold nil)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Initialize package sources

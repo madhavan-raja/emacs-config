@@ -4,4 +4,4 @@
 # Except
 !.gitignore
 !init.el
-!snippets/*
+!README.org

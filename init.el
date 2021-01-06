@@ -40,8 +40,11 @@
 (tool-bar-mode -1)
 (tooltip-mode -1)
 (menu-bar-mode -1)
-(set-fringe-mode 0)
-(set-face-attribute 'fringe nil :background nil)
+
+(set-fringe-mode 10)
+(set-face-attribute 'fringe nil
+		    :foreground (face-foreground 'default)
+                    :background (face-background 'default))
 
 (global-visual-line-mode t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -12,6 +12,9 @@
 (setq
  split-width-threshold 0
  split-height-threshold nil)
+
+(use-package smooth-scrolling)
+(smooth-scrolling-mode 1)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Initialize package sources
@@ -36,8 +39,9 @@
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (tooltip-mode -1)
-(set-fringe-mode 0)
 (menu-bar-mode -1)
+(set-fringe-mode 0)
+(set-face-attribute 'fringe nil :background nil)
 
 (global-visual-line-mode t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -54,9 +58,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Line numbers
-(column-number-mode)
-(global-display-line-numbers-mode t)
-(setq display-line-numbers-width-start t)
+(setq-default display-line-numbers-type 'visual
+	      display-line-numbers-current-absolute t
+	      display-line-numbers-width 3
+	      display-line-numbers-widen t)
+(add-hook 'text-mode-hook #'display-line-numbers-mode)
+(add-hook 'prog-mode-hook #'display-line-numbers-mode)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Disable line numbers for some modes

@@ -4,19 +4,6 @@
 (setq inhibit-startup-message t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Behaviour
-(setq make-backup-files nil)
-(setq visible-bell t)
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-
-(setq
- split-width-threshold 0
- split-height-threshold nil)
-
-(use-package smooth-scrolling)
-(smooth-scrolling-mode 1)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 ;; Initialize package sources
 (require 'package)
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
@@ -33,6 +20,19 @@
 
 (require 'use-package)
 (setq use-package-always-ensure t)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Behaviour
+(setq make-backup-files nil)
+(setq visible-bell t)
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+(setq
+ split-width-threshold 0
+ split-height-threshold nil)
+
+(use-package smooth-scrolling)
+(smooth-scrolling-mode 1)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Theme

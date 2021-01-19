@@ -36,8 +36,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Theme
-(use-package doom-themes
-  :init (load-theme 'doom-dark+ t))
+(use-package ayu-theme
+  :config (load-theme 'ayu-dark t))
+
+; (use-package doom-themes
+;   :init (load-theme 'doom-dark+ t))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Modeline

@@ -65,7 +65,42 @@
 
 (use-package smooth-scrolling)
 (smooth-scrolling-mode 1)
+(setq smooth-scroll-margin 5)
 
+(defun aborn/backward-kill-word ()
+  "Customize/Smart backward-kill-word."
+  (interactive)
+  (let* ((cp (point))
+         (backword)
+         (end)
+         (space-pos)
+         (backword-char (if (bobp)
+                            ""
+                          (buffer-substring cp (- cp 1)))))
+    (if (equal (length backword-char) (string-width backword-char))
+        (progn
+          (save-excursion
+            (setq backword (buffer-substring (point) (progn (forward-word -1) (point)))))
+          (setq ab/debug backword)
+          (save-excursion
+            (when (and backword
+                       (s-contains? " " backword))
+              (setq space-pos (ignore-errors (search-backward " ")))))
+          (save-excursion
+            (let* ((pos (ignore-errors (search-backward-regexp "\n")))
+                   (substr (when pos (buffer-substring pos cp))))
+              (when (or (and substr (s-blank? (s-trim substr)))
+                        (s-contains? "\n" backword))
+                (setq end pos))))
+          (if end
+              (kill-region cp end)
+            (if space-pos
+                (kill-region cp space-pos)
+              (backward-kill-word 1))))
+      (kill-region cp (- cp 1)))))
+
+(global-set-key  [C-backspace]
+		 'aborn/backward-kill-word)
 
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ;;     Theme
@@ -151,11 +186,22 @@
 (show-paren-mode 1)
 (setq show-paren-delay 0)
 (require 'paren)
-(set-face-background 'show-paren-match (face-background 'default))
-(set-face-foreground 'show-paren-match "#def")
+; (set-face-background 'show-paren-match (face-background 'default))
+(set-face-background 'show-paren-match "#666")
+; (set-face-foreground 'show-paren-match "#def")
 (set-face-attribute 'show-paren-match nil :weight 'extra-bold)
 
 (electric-pair-mode 1)
+
+;; ════════════════════════════════════════════════════════════════════════
+;; Disable electric pair for some modes
+;; ════════════════════════════════════════════════════════════════════════
+
+(dolist (mode '(org-mode-hook
+		term-mode-hook
+		shell-mode-hook
+		eshell-mode-hook))
+  (add-hook mode (lambda () (electric-pair-mode 0))))
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
@@ -209,10 +255,6 @@
 ;;     Evil Mode
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-(use-package undo-tree)
-(global-undo-tree-mode t)
-(setq evil-undo-system 'undo-tree)
-
 (use-package evil
   :init
   (setq evil-want-integration t)
@@ -231,11 +273,15 @@
 ;; Use visual line motions even outside of visual-line-mode buffers
 ;; ════════════════════════════════════════════════════════════════════════
 
-  (evil-global-set-key 'motion "j" 'evil-next-visual-line)
-  (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+  (evil-global-set-key 'motion "j" 'evil-next-line)
+  (evil-global-set-key 'motion "k" 'evil-previous-line)
 
   (evil-set-initial-state 'messages-buffer-mode 'normal)
   (evil-set-initial-state 'dashboard-mode 'normal))
+
+(use-package undo-tree)
+(global-undo-tree-mode t)
+(setq evil-undo-system 'undo-tree)
 
 
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -293,12 +339,16 @@
 (use-package elpy)
 (elpy-enable)
 
-(when (require 'flycheck nil t)
-  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-  (add-hook 'elpy-mode-hook 'flycheck-mode))
+(use-package pylint)
+
+; (when (require 'flycheck nil t)
+  ; (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+  ; (add-hook 'elpy-mode-hook 'flycheck-mode))
+
+; (add-hook 'python-mode-hook 'flycheck-mode)
 
 (use-package py-autopep8)
-(add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+(add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
 
 
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

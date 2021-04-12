@@ -1,5 +1,7 @@
 #+TITLE: Emacs Configurations
 
+This configuration will primarily focus on note taking and documenting.
+
 Apply this config by cloning this repository into =.emacs.d=
 #+BEGIN_SRC bash
 git clone https://github.com/madhavan-raja/emacs-config.git ./.emacs.d

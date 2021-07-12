@@ -1,6 +1,6 @@
 #+TITLE: Emacs Configurations
 
-An Emacs configuration for note taking and documenting.
+An Emacs configuration potentially for note taking and documenting.
 
 Apply this config by cloning this repository into =.emacs.d=
 #+BEGIN_SRC bash

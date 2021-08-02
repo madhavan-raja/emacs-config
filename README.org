@@ -2,7 +2,7 @@
 
 An Emacs configuration potentially for note taking and documenting.
 
-Apply this config by cloning this repository into =.emacs.d=.
+Clone with
 #+BEGIN_SRC bash
-git clone https://github.com/madhavan-raja/emacs-config.git ./.emacs.d
+git clone https://github.com/madhavan-raja/emacs-config.git ~/.emacs.d
 #+END_SRC

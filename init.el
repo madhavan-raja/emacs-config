@@ -8,7 +8,6 @@
 ;; ════════════════════════════════════════════════════════════════════════
 
 
-
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ;;     Delay Garbage Collection
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -67,6 +66,10 @@
 (smooth-scrolling-mode 1)
 (setq smooth-scroll-margin 5)
 
+;; ════════════════════════════════════════════════════════════════════════
+;; Make C-backspace delete the word to the left of cursor
+;; ════════════════════════════════════════════════════════════════════════
+
 (defun aborn/backward-kill-word ()
   "Customize/Smart backward-kill-word."
   (interactive)
@@ -102,22 +105,25 @@
 (global-set-key  [C-backspace]
 		 'aborn/backward-kill-word)
 
+
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ;;     Theme
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-(use-package ayu-theme
-  :config (load-theme 'ayu-dark t))
+(use-package sublime-themes
+  :config (load-theme 'spolsky t))
+
+(custom-set-faces `(default ((t (:background "#0E0E0E")))))
 
 
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ;;     Modeline
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-(use-package doom-modeline
-  :ensure t
-  :init (doom-modeline-mode 1)
-  :custom ((doom-modeline-height 10)))
+; (use-package doom-modeline
+;   :ensure t
+;   :init (doom-modeline-mode 1)
+;   :custom ((doom-modeline-height 10)))
 
 
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -129,10 +135,7 @@
 (tooltip-mode -1)
 (menu-bar-mode -1)
 
-(set-fringe-mode 10)
-(set-face-attribute 'fringe nil
-		    :foreground (face-foreground 'default)
-                    :background (face-background 'default))
+(set-fringe-mode 0)
 
 (global-visual-line-mode t)
 
@@ -142,8 +145,7 @@
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 (set-face-attribute 'default nil
-		    :font "Fira Code"
-		    :height 126)
+		    :font "Fira Code-12")
 
 
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -154,57 +156,7 @@
 ;; Note: Run [ M-x all-the-icons-install-fonts ] first
 ;; ════════════════════════════════════════════════════════════════════════
 
-(use-package all-the-icons)
-
-
-;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-;;     Line Numbers
-;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-(setq-default display-line-numbers-type 'relative
-	      display-line-numbers-current-absolute t
-	      display-line-numbers-width 3
-	      display-line-numbers-widen t)
-(add-hook 'text-mode-hook #'display-line-numbers-mode)
-(add-hook 'prog-mode-hook #'display-line-numbers-mode)
-
-;; ════════════════════════════════════════════════════════════════════════
-;; Disable line numbers for some modes
-;; ════════════════════════════════════════════════════════════════════════
-
-(dolist (mode '(org-mode-hook
-		term-mode-hook
-		shell-mode-hook
-		eshell-mode-hook))
-  (add-hook mode (lambda () (display-line-numbers-mode 0))))
-
-
-;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-;;     Parenthesis
-;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-(show-paren-mode 1)
-(setq show-paren-delay 0)
-(require 'paren)
-; (set-face-background 'show-paren-match (face-background 'default))
-(set-face-background 'show-paren-match "#666")
-; (set-face-foreground 'show-paren-match "#def")
-(set-face-attribute 'show-paren-match nil :weight 'extra-bold)
-
-(electric-pair-mode 1)
-
-;; ════════════════════════════════════════════════════════════════════════
-;; Disable electric pair for some modes
-;; ════════════════════════════════════════════════════════════════════════
-
-(dolist (mode '(org-mode-hook
-		term-mode-hook
-		shell-mode-hook
-		eshell-mode-hook))
-  (add-hook mode (lambda () (electric-pair-mode 0))))
-
-(use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode))
+; (use-package all-the-icons)
 
 
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -244,6 +196,7 @@
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 (use-package counsel
+  ; :init ((set-face-attribute 'counsel nil :font "Fira Code-12"))
   :bind (("M-x" . counsel-M-x)
 	 ("C-x b" . counsel-ibuffer)
 	 ("C-x C-f" . counsel-find-file)
@@ -283,67 +236,10 @@
 ;;     Evil Collection
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-(use-package evil-collection
-  :after evil
-  :config
-  (evil-collection-init))
-
-
-;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-;;     Command Log
-;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-(use-package command-log-mode)
-
-
-;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-;;     Programming and Development
-;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-(use-package auto-complete)
-(require 'auto-complete-config)
-(ac-config-default)
-
-(use-package yasnippet)
-(use-package yasnippet-snippets)
-(yas-global-mode 1)
-
-(use-package iedit)
-
-(use-package flycheck)
-
-
-;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-;;     Competitive Programming
-;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-(use-package google-c-style)
-(add-hook 'c-mode-common-hook 'google-set-c-style)
-(add-hook 'c-mode-common-hook 'google-make-newline-indent)
-
-(add-hook 'c-mode-common-hook 'flycheck-mode)
-
-(add-hook 'c-mode-common-hook (lambda()
-				(global-set-key (kbd "<f9>") 'recompile)))
-
-
-;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-;;     Python Development
-;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-(use-package elpy)
-(elpy-enable)
-
-(use-package pylint)
-
-; (when (require 'flycheck nil t)
-  ; (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-  ; (add-hook 'elpy-mode-hook 'flycheck-mode))
-
-; (add-hook 'python-mode-hook 'flycheck-mode)
-
-(use-package py-autopep8)
-(add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
+; (use-package evil-collection
+;   :after evil
+;   :config
+;   (evil-collection-init))
 
 
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -361,14 +257,14 @@
 ;;     Darkroom Mode
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-(use-package darkroom)
+; (use-package darkroom)
 
 
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ;;     Magit
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-(use-package magit)
+; (use-package magit)
 
 
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -376,7 +272,6 @@
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 (setq custom-file (expand-file-name ".custom" user-emacs-directory))
-
 
 
 ;; ════════════════════════════════════════════════════════════════════════

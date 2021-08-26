@@ -250,8 +250,16 @@
 (add-hook 'org-mode-hook 'org-indent-mode)
 (add-hook 'org-mode-hook 'org-toggle-pretty-entities)
 
-(use-package org-bullets)
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+; (use-package org-bullets)
+; (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+(use-package org-bullets
+  :ensure t
+  :init
+  (setq org-bullets-face-name "Inconsolata-12")
+  (setq org-bullets-bullet-list
+        '("◉" "○" "◇" "►"))
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
 
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

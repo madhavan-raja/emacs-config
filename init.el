@@ -1,4 +1,4 @@
-;; ════════════════════════════════════════════════════════════════════════
+';; ════════════════════════════════════════════════════════════════════════
 ;; ═════════════════════════ Beginning Of Config ══════════════════════════
 ;; ════════════════════════════════════════════════════════════════════════
 ;;
@@ -145,8 +145,25 @@
 ;;     Fonts
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-(set-face-attribute 'default nil
-		    :font "Fira Code-12")
+; (set-face-attribute 'default nil
+; 		    :font "Fira Code-12")
+
+(defun set-font-faces ()
+  (set-face-attribute 'default nil :font "Fira Code-12")
+  (set-face-attribute 'fixed-pitch nil :font "Courier New-12"))
+
+  ;; Set the fixed pitch face
+  ; (set-face-attribute 'fixed-pitch nil :font "Fira Code Retina" :height efs/default-font-size)
+
+  ;; Set the variable pitch face
+  ; (set-face-attribute 'variable-pitch nil :font "Cantarell" :height efs/default-variable-font-size :weight 'regular))
+
+(if (daemonp)
+    (add-hook 'after-make-frame-functions
+              (lambda (frame)
+                (with-selected-frame frame
+                  (set-font-faces))))
+    (set-font-faces))
 
 
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -261,6 +278,21 @@
   :config
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
+(require 'ox-latex)
+(add-to-list 'org-latex-packages-alist '("" "minted"))
+(setq org-latex-listings 'minted)
+
+(setq org-latex-pdf-process
+      '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+
+(setq org-src-fontify-natively t)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((R . t)
+   (latex . t)))
 
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ;;     Org Roam
@@ -277,7 +309,6 @@
          ("C-c n i" . org-roam-node-insert))
   :config
   (org-roam-setup))
-
 
 
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

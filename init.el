@@ -135,9 +135,6 @@
 (tooltip-mode -1)
 (menu-bar-mode -1)
 
-; (set-fringe-mode 0)
-(set-face-attribute 'fringe nil :background nil)
-
 (global-visual-line-mode t)
 
 
@@ -150,17 +147,11 @@
 
 (defun set-font-faces ()
   (set-face-attribute 'default nil :font "Fira Code-12")
-  (set-face-attribute 'fixed-pitch nil :font "Courier New-12"))
-
-  ;; Set the fixed pitch face
-  ; (set-face-attribute 'fixed-pitch nil :font "Fira Code Retina" :height efs/default-font-size)
-
-  ;; Set the variable pitch face
-  ; (set-face-attribute 'variable-pitch nil :font "Cantarell" :height efs/default-variable-font-size :weight 'regular))
+  (set-face-attribute 'fringe nil :background nil))
 
 (if (daemonp)
     (add-hook 'after-make-frame-functions
-              (lambda (frame)
+	      (lambda (frame)
                 (with-selected-frame frame
                   (set-font-faces))))
     (set-font-faces))

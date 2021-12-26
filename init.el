@@ -109,8 +109,8 @@
 ;;     Theme
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-(use-package sublime-themes
-  :config (load-theme 'spolsky t))
+(use-package doom-themes
+  :config (load-theme 'doom-dark+ t))
 
 (custom-set-faces `(default ((t (:background "#0E0E0E")))))
 
@@ -119,10 +119,12 @@
 ;;     Modeline
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-; (use-package doom-modeline
-;   :ensure t
-;   :init (doom-modeline-mode 1)
-;   :custom ((doom-modeline-height 10)))
+(use-package doom-modeline
+  :ensure t
+  :hook (after-init . doom-modeline-mode))
+
+(setq doom-modeline-unicode-fallback nil)
+(setq doom-modeline-evil-state-icon nil)
 
 
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -134,18 +136,16 @@
 (tooltip-mode -1)
 (menu-bar-mode -1)
 
-(global-visual-line-mode t)
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+(setq linum-format "%3d ")
 
 
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ;;     Fonts
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-; (set-face-attribute 'default nil
-; 		    :font "Fira Code-12")
-
 (defun set-font-faces ()
-  (set-face-attribute 'default nil :font "Fira Code-12")
+  (set-face-attribute 'default nil :font "Fira Code-11")
   (set-face-attribute 'fringe nil :background nil))
 
 (if (daemonp)
@@ -164,7 +164,7 @@
 ;; Note: Run [ M-x all-the-icons-install-fonts ] first
 ;; ════════════════════════════════════════════════════════════════════════
 
-; (use-package all-the-icons)
+(use-package all-the-icons)
 
 
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -257,8 +257,6 @@
 (add-hook 'org-mode-hook 'org-indent-mode)
 (add-hook 'org-mode-hook 'org-toggle-pretty-entities)
 
-; (use-package org-bullets)
-; (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 (use-package org-bullets
   :ensure t
   :init
@@ -305,14 +303,14 @@
 ;;     Darkroom Mode
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-; (use-package darkroom)
+(use-package darkroom)
 
 
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ;;     Magit
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-; (use-package magit)
+(use-package magit)
 
 
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

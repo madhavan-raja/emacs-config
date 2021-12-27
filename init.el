@@ -1,3 +1,4 @@
+;; ════════════════════════════════════════════════════════════════════════
 ;; ═════════════════════════ Beginning Of Config ══════════════════════════
 ;; ════════════════════════════════════════════════════════════════════════
 ;;
@@ -53,7 +54,9 @@
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 (setq make-backup-files nil)
-(setq visible-bell t)
+(setq visible-bell nil)
+(setq ring-bell-function 'ignore)
+
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 (setq
@@ -232,11 +235,10 @@
 ;; Use visual line motions even outside of visual-line-mode buffers
 ;; ════════════════════════════════════════════════════════════════════════
 
-  (evil-global-set-key 'motion "j" 'evil-next-line)
-  (evil-global-set-key 'motion "k" 'evil-previous-line)
-
-  (evil-set-initial-state 'messages-buffer-mode 'normal)
-  (evil-set-initial-state 'dashboard-mode 'normal))
+(evil-global-set-key 'motion "j" 'evil-next-line)
+(evil-global-set-key 'motion "k" 'evil-previous-line)
+(evil-set-initial-state 'messages-buffer-mode 'normal)
+(evil-set-initial-state 'dashboard-mode 'normal))
 
 
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

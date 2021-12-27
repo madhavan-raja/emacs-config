@@ -269,7 +269,7 @@
   :init
   (setq org-bullets-face-name "Inconsolata-12")
   (setq org-bullets-bullet-list
-        '("◉" "○" "◇" "►"))
+        '("◉" "○" "►" "◇"))
   :config
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 

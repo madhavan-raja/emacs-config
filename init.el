@@ -116,7 +116,7 @@
 
 (custom-set-faces `(default ((t (:background "#0E0E0E")))))
 
-(setq doom-themes-treemacs-theme "doom-colors")
+; (setq doom-themes-treemacs-theme "doom-colors")
 
 
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -141,6 +141,12 @@
 (menu-bar-mode -1)
 
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
+(add-hook 'prog-mode-hook 'electric-pair-mode)
+(add-hook 'prog-mode-hook 'show-paren-mode)
+(setq show-paren-delay 0)
+(set-face-background 'show-paren-match (face-background 'default))
+(set-face-foreground 'show-paren-match "#f23")
+
 (setq linum-format "%3d ")
 
 
@@ -170,9 +176,9 @@
 
 (use-package all-the-icons)
 
-(use-package treemacs-all-the-icons
-  :init
-  (treemacs-load-theme "all-the-icons"))
+; (use-package treemacs-all-the-icons
+;   :init
+;   (treemacs-load-theme "all-the-icons"))
 
 
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -241,10 +247,10 @@
 ;; Use visual line motions even outside of visual-line-mode buffers
 ;; ════════════════════════════════════════════════════════════════════════
 
-(evil-global-set-key 'motion "j" 'evil-next-line)
-(evil-global-set-key 'motion "k" 'evil-previous-line)
-(evil-set-initial-state 'messages-buffer-mode 'normal)
-(evil-set-initial-state 'dashboard-mode 'normal))
+  (evil-global-set-key 'motion "j" 'evil-next-line)
+  (evil-global-set-key 'motion "k" 'evil-previous-line)
+  (evil-set-initial-state 'messages-buffer-mode 'normal)
+  (evil-set-initial-state 'dashboard-mode 'normal))
 
 
 ;; ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

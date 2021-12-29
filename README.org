@@ -1,8 +1,455 @@
-#+TITLE: Emacs Configurations
+#+title: Emacs Configurations
 
-An Emacs configuration for note taking and documenting.
+* Introduction
+An Emacs configuration for note taking, documenting and (potentially) development. Clone using:
 
-Clone using:
-#+BEGIN_SRC bash
+#+begin_src bash :tangle no
 git clone https://github.com/madhavan-raja/emacs-config.git ~/.emacs.d
-#+END_SRC
+#+end_src
+
+Open =README.org= in Emacs and run:
+
+#+begin_src emacs-lisp :tangle no
+(org-babel-tangle)
+#+end_src
+
+Lastly, restart Emacs.
+
+* Delay Garbage Collection
+This can probably be removed when using Daemon.
+
+#+begin_src emacs-lisp :tangle init.el
+(setq gc-cons-percentage 0.6)
+(setq gc-cons-threshold most-positive-fixnum)
+#+end_src
+
+* Initialize Package Sources
+** Linux platforms
+Initialize packages for Melpa, Org and Elpa:
+
+#+begin_src emacs-lisp :tangle init.el
+(require 'package)
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                         ("org" . "https://orgmode.org/elpa/")
+                         ("elpa" . "https://elpa.gnu.org/packages/")))
+
+(package-initialize)
+(unless package-archive-contents
+  (package-refresh-contents))
+#+end_src
+
+** Non-Linux platforms
+Initialize use-package on Non-Linux platforms:
+
+#+begin_src emacs-lisp :tangle init.el
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
+
+(require 'use-package)
+(setq use-package-always-ensure t)
+#+end_src
+
+* Window
+** Window title
+Set window title to the name of the buffer:
+
+#+begin_src emacs-lisp :tangle init.el
+(setq frame-title-format "%b - Emacs")
+#+end_src
+
+** Window size
+Start the application maximized:
+
+#+begin_src emacs-lisp :tangle init.el
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+#+end_src
+
+** Startup screen
+Disable the startup screen:
+
+#+begin_src emacs-lisp :tangle init.el
+(setq inhibit-startup-message t)
+#+end_src
+
+* Behaviour
+** Backup files
+Disable the generation of backup files:
+
+#+begin_src emacs-lisp :tangle init.el
+(setq make-backup-files nil)
+#+end_src
+
+** Notifications
+Disable the notifications:
+
+#+begin_src emacs-lisp :tangle init.el
+(setq visible-bell nil)
+(setq ring-bell-function 'ignore)
+#+end_src
+
+** Esc cancels the current command.
+Map the escape key to cancel the current command. Useful with =evil-mode=:
+
+#+begin_src emacs-lisp :tangle init.el
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+#+end_src
+
+** Vertical split
+Use vertical split instead of horizontal split:
+
+#+begin_src emacs-lisp :tangle init.el
+(setq
+  split-width-threshold 0
+  split-height-threshold nil)
+#+end_src
+
+** Smooth scrolling
+Use smooth-scrolling:
+
+#+begin_src emacs-lisp :tangle init.el
+(use-package smooth-scrolling)
+(smooth-scrolling-mode 1)
+(setq smooth-scroll-margin 5)
+#+end_src
+
+** Delete the previous word on C-BACKSPACE
+Function to delete the word to the left of cursor:
+
+#+begin_src emacs-lisp :tangle init.el
+(defun aborn/backward-kill-word ()
+  "Customize/Smart backward-kill-word."
+  (interactive)
+  (let* ((cp (point))
+         (backword)
+         (end)
+         (space-pos)
+         (backword-char (if (bobp)
+                            ""
+                          (buffer-substring cp (- cp 1)))))
+    (if (equal (length backword-char) (string-width backword-char))
+        (progn
+          (save-excursion
+            (setq backword (buffer-substring (point) (progn (forward-word -1) (point)))))
+          (setq ab/debug backword)
+          (save-excursion
+            (when (and backword
+                       (s-contains? " " backword))
+              (setq space-pos (ignore-errors (search-backward " ")))))
+          (save-excursion
+            (let* ((pos (ignore-errors (search-backward-regexp "\n")))
+                   (substr (when pos (buffer-substring pos cp))))
+              (when (or (and substr (s-blank? (s-trim substr)))
+                        (s-contains? "\n" backword))
+                (setq end pos))))
+          (if end
+              (kill-region cp end)
+            (if space-pos
+                (kill-region cp space-pos)
+              (backward-kill-word 1))))
+      (kill-region cp (- cp 1)))))
+#+end_src
+
+Call the function when pressing C-Backspace:
+
+#+begin_src emacs-lisp :tangle init.el
+(global-set-key  [C-backspace]
+		 'aborn/backward-kill-word)
+#+end_src
+
+** Open Configuration File
+Open configuration files on pressing =C-c c=:
+
+#+begin_src emacs-lisp :tangle init.el
+(defun edit-configuration ()
+  "Open the init file."
+  (interactive)
+  (find-file user-init-file))
+
+(global-set-key (kbd "C-c c") 'edit-configuration)
+#+end_src
+** Custom File
+Set the location of the custom files to =.custom= directory:
+
+#+begin_src emacs-lisp :tangle init.el
+(setq custom-file (expand-file-name ".custom" user-emacs-directory))
+#+end_src
+* Theme
+Use the =doom-dark+= theme:
+
+#+begin_src emacs-lisp :tangle init.el
+(use-package doom-themes
+  :config (load-theme 'doom-dark+ t))
+
+(custom-set-faces `(default ((t (:background "#0E0E0E")))))
+#+end_src
+
+* Modeline
+Use the =doom-modeline=:
+
+#+begin_src emacs-lisp :tangle init.el
+(use-package doom-modeline
+  :ensure t
+  :hook (after-init . doom-modeline-mode))
+#+end_src
+
+* Basic Visual Adjustments
+** Scroll bar
+Disable the scroll bar:
+
+#+begin_src emacs-lisp :tangle init.el
+(scroll-bar-mode -1)
+#+end_src
+** Tool bar
+Disable the tool bar:
+
+#+begin_src emacs-lisp :tangle init.el
+(tool-bar-mode -1)
+#+end_src
+** Tooltips
+Disable tooltips:
+
+#+begin_src emacs-lisp :tangle init.el
+(tooltip-mode -1)
+#+end_src
+** Menu bar
+Disable the menu bar:
+
+#+begin_src emacs-lisp :tangle init.el
+(menu-bar-mode -1)
+#+end_src
+** Line numbers
+Display line numbers when programming:
+
+#+begin_src emacs-lisp :tangle init.el
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+#+end_src
+** Electric pair
+Auto insert closing brackets when programming:
+
+#+begin_src emacs-lisp :tangle init.el
+(add-hook 'prog-mode-hook 'electric-pair-mode)
+#+end_src
+
+** Highlight parenthesis
+Highlight matching parenthesis/brackets:
+
+#+begin_src emacs-lisp :tangle init.el
+(add-hook 'prog-mode-hook 'show-paren-mode)
+(setq show-paren-delay 0)
+#+end_src
+*** Highlight visuals
+Set the colors of the highlight:
+
+#+begin_src emacs-lisp :tangle init.el
+(set-face-background 'show-paren-match (face-background 'default))
+(set-face-foreground 'show-paren-match "#f23")
+#+end_src
+
+* Fonts
+Set font and fringe background color:
+
+#+begin_src emacs-lisp :tangle init.el
+(defun set-font-faces ()
+  (set-face-attribute 'default nil :font "Fira Code-11")
+  (set-face-attribute 'fringe nil :background nil))
+
+(if (daemonp)
+    (add-hook 'after-make-frame-functions
+	      (lambda (frame)
+                (with-selected-frame frame
+                  (set-font-faces))))
+    (set-font-faces))
+#+end_src
+
+* All The Icons
+Fonts used by =doom-modeline=.
+
+** Prerequisites
+Install the fonts first by running:
+
+#+begin_src emacs-lisp
+(all-the-icons-install-fonts)
+#+end_src
+
+** Package installation
+Install the package using:
+
+#+begin_src emacs-lisp :tangle init.el
+(use-package all-the-icons)
+#+end_src
+
+* Ivy
+The minibuffer autocomplete:
+
+#+begin_src emacs-lisp :tangle init.el
+(use-package ivy
+  :diminish
+  :bind (("C-s" . swiper)
+	 :map ivy-minibuffer-map
+         ("TAB" . ivy-alt-done)	
+         ("C-l" . ivy-alt-done)
+         ("C-j" . ivy-next-line)
+         ("C-k" . ivy-previous-line)
+         :map ivy-switch-buffer-map
+         ("C-k" . ivy-previous-line)
+         ("C-l" . ivy-done)
+         ("C-d" . ivy-switch-buffer-kill)
+         :map ivy-reverse-i-search-map
+         ("C-k" . ivy-previous-line)
+         ("C-d" . ivy-reverse-i-search-kill))
+  :config
+  (ivy-mode 1))
+#+end_src
+
+* Ivy-Rich
+An extension for =ivy=:
+
+#+begin_src emacs-lisp :tangle init.el
+(use-package ivy-rich
+  :init
+  (ivy-rich-mode 1))
+#+end_src
+
+* Counsel
+Does something, idk:
+
+#+begin_src emacs-lisp :tangle init.el
+(use-package counsel
+  :bind (("M-x" . counsel-M-x)
+	 ("C-x b" . counsel-ibuffer)
+	 ("C-x C-f" . counsel-find-file)
+	 :map minibuffer-local-map
+	 ("C-r" . 'counsel-minibuffer-history)))
+#+end_src
+
+* Evil Mode
+Vim keybindings:
+
+#+begin_src emacs-lisp :tangle init.el
+(use-package evil
+  :init
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)
+  (setq evil-want-C-u-scroll t)
+  (setq evil-want-C-i-jump nil)
+  :config
+  (evil-mode 1)
+  (define-key evil-insert-state-map (kbd "C-g")
+    'evil-normal-state)
+  (define-key evil-insert-state-map (kbd "C-h")
+    'evil-delete-backward-char-and-join))
+#+end_src
+** Use visual line motions even outside of visual-line-mode buffers
+Go to the real previous/next lines outside of =visual-line-mode=:
+
+#+begin_src emacs-lisp :tangle init.el
+(evil-global-set-key 'motion "j" 'evil-next-line)
+(evil-global-set-key 'motion "k" 'evil-previous-line)
+(evil-set-initial-state 'messages-buffer-mode 'normal)
+(evil-set-initial-state 'dashboard-mode 'normal)
+#+end_src
+
+** Evil Collection
+More =evil-mode= bindings:
+
+#+begin_src emacs-lisp :tangle init.el
+(use-package evil-collection
+  :after evil
+  :config
+  (evil-collection-init))
+#+end_src
+
+* Org Mode
+** Org-indent
+Indent the contents of an org document:
+
+#+begin_src emacs-lisp :tangle init.el
+(add-hook 'org-mode-hook 'org-indent-mode)
+#+end_src
+** Pretty entities
+Render a handful of LaTeX expressions:
+
+#+begin_src emacs-lisp :tangle init.el
+(add-hook 'org-mode-hook 'org-toggle-pretty-entities)
+#+end_src
+
+** Org bullets
+Customize the face of the bullets
+
+#+begin_src emacs-lisp :tangle init.el
+(use-package org-bullets
+  :ensure t
+  :init
+  (setq org-bullets-face-name "Inconsolata-12")
+  (setq org-bullets-bullet-list
+        '("◉" "○" "►" "◇"))
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+#+end_src
+
+** Minted
+Syntax highlighting for Org PDF compilation:
+
+#+begin_src emacs-lisp :tangle init.el
+(require 'ox-latex)
+(add-to-list 'org-latex-packages-alist '("" "minted"))
+(setq org-latex-listings 'minted)
+
+(setq org-latex-pdf-process
+      '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+
+(setq org-src-fontify-natively t)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((R . t)
+   (latex . t)))
+#+end_src
+** Org ellipses
+Change the character for the ellipses:
+
+#+begin_src emacs-lisp :tangle init.el
+(setq org-ellipsis " ⤵")
+#+end_src
+** Org agenda
+*** Org agenda files
+Set =org-agenda-files= to the Roam directory:
+
+#+begin_src emacs-lisp :tangle init.el
+(setq org-agenda-files '("~/RoamNotes"))
+#+end_src
+
+** Org Roam
+Map =C-c n f= to find a node, and set the correct directory for Roam Notes:
+
+#+begin_src emacs-lisp :tangle init.el
+(use-package org-roam
+  :ensure t
+  :init
+  (setq org-roam-v2-ack t)
+  :custom
+  (org-roam-directory "~/RoamNotes")
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n i" . org-roam-node-insert))
+  :config
+  (org-roam-setup))
+#+end_src
+
+* Magit
+A Git client:
+
+#+begin_src emacs-lisp :tangle init.el
+(use-package magit)
+#+end_src
+
+* Treemacs
+A file browser sidebar:
+
+#+begin_src emacs-lisp :tangle init.el
+(use-package treemacs
+  :init
+  (global-set-key (kbd "C-c C-n") 'treemacs))
+#+end_src

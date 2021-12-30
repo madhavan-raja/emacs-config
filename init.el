@@ -30,12 +30,27 @@
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 (setq
- split-width-threshold 0
- split-height-threshold nil)
+  split-width-threshold 0
+  split-height-threshold nil)
 
 (use-package smooth-scrolling)
-(smooth-scrolling-mode 1)
+(smooth-scrolling-mode nil)
 (setq smooth-scroll-margin 5)
+
+(use-package emacs
+  :custom
+  (redisplay-dont-pause            t) ;; Fully redraw the display before it processes queued input events.
+  (next-screen-context-lines       2) ;; Number of lines of continuity to retain when scrolling by full screens
+  (scroll-conservatively       10000) ;; only 'jump' when moving this far off the screen
+  (scroll-step                     1) ;; Keyboard scroll one line at a time
+  (mouse-wheel-progressive-speed nil) ;; Don't accelerate scrolling
+  (mouse-wheel-follow-mouse        t) ;; Scroll window under mouse
+  (fast-but-imprecise-scrolling    t) ;; No (less) lag while scrolling lots.
+  (auto-window-vscroll           nil) ;; Cursor move faster
+  )
+
+(use-package good-scroll
+  :hook (after-init . good-scroll-mode))
 
 (defun aborn/backward-kill-word ()
   "Customize/Smart backward-kill-word."
@@ -120,10 +135,6 @@
     (set-font-faces))
 
 (use-package all-the-icons)
-
-; (use-package treemacs-all-the-icons
-;   :init
-;   (treemacs-load-theme "all-the-icons"))
 
 (use-package ivy
   :diminish

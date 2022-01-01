@@ -90,7 +90,7 @@
 (defun edit-configuration ()
   "Open the init file."
   (interactive)
-  (find-file user-init-file))
+  (find-file "~/.emacs.d/README.org"))
 
 (global-set-key (kbd "C-c c") 'edit-configuration)
 
@@ -115,10 +115,10 @@
 
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
-(add-hook 'prog-mode-hook 'electric-pair-mode)
-
 (add-hook 'prog-mode-hook 'show-paren-mode)
 (setq show-paren-delay 0)
+
+(add-hook 'prog-mode-hook 'electric-pair-mode)
 
 (set-face-background 'show-paren-match (face-background 'default))
 (set-face-foreground 'show-paren-match "#f23")
@@ -237,4 +237,4 @@
 
 (use-package treemacs
   :init
-  (global-set-key (kbd "C-c C-n") 'treemacs))
+  (global-set-key (kbd "C-c n") 'treemacs))

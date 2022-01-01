@@ -183,7 +183,7 @@ Open configuration files on pressing =C-c c=:
 (defun edit-configuration ()
   "Open the init file."
   (interactive)
-  (find-file user-init-file))
+  (find-file "~/.emacs.d/README.org"))
 
 (global-set-key (kbd "C-c c") 'edit-configuration)
 #+end_src
@@ -243,20 +243,21 @@ Display line numbers when programming:
 #+begin_src emacs-lisp :tangle init.el
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 #+end_src
-** Electric pair
+** Parenthesis
+Auto-insert and highlight matching parenthesis/brackets:
+
+#+begin_src emacs-lisp :tangle init.el
+(add-hook 'prog-mode-hook 'show-paren-mode)
+(setq show-paren-delay 0)
+#+end_src
+
+*** Electric pair
 Auto insert closing brackets when programming:
 
 #+begin_src emacs-lisp :tangle init.el
 (add-hook 'prog-mode-hook 'electric-pair-mode)
 #+end_src
 
-** Highlight parenthesis
-Highlight matching parenthesis/brackets:
-
-#+begin_src emacs-lisp :tangle init.el
-(add-hook 'prog-mode-hook 'show-paren-mode)
-(setq show-paren-delay 0)
-#+end_src
 *** Highlight visuals
 Set the colors of the highlight:
 
@@ -471,5 +472,5 @@ A file browser sidebar:
 #+begin_src emacs-lisp :tangle init.el
 (use-package treemacs
   :init
-  (global-set-key (kbd "C-c C-n") 'treemacs))
+  (global-set-key (kbd "C-c n") 'treemacs))
 #+end_src

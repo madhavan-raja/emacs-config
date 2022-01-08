@@ -237,4 +237,4 @@
 
 (use-package treemacs
   :init
-  (global-set-key (kbd "C-c n") 'treemacs))
+  (global-set-key (kbd "C-`") 'treemacs))

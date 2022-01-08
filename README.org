@@ -472,5 +472,5 @@ A file browser sidebar:
 #+begin_src emacs-lisp :tangle init.el
 (use-package treemacs
   :init
-  (global-set-key (kbd "C-c n") 'treemacs))
+  (global-set-key (kbd "C-`") 'treemacs))
 #+end_src

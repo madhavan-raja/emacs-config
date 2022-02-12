@@ -1,17 +1,75 @@
 #+TITLE: Emacs Configurations
 #+AUTHOR: Madhavan Raja
 
+* Table of Contents :toc:
+- [[#introduction][Introduction]]
+- [[#packages][Packages]]
+- [[#window][Window]]
+- [[#behaviour][Behaviour]]
+  - [[#basic-settings][Basic settings]]
+  - [[#backup-files][Backup files]]
+  - [[#notifications][Notifications]]
+  - [[#esc-cancels-the-current-command][ESC cancels the current command.]]
+  - [[#good-scroll][Good scroll]]
+  - [[#custom-file][Custom File]]
+- [[#theme][Theme]]
+- [[#basic-visual-adjustments][Basic Visual Adjustments]]
+  - [[#disable-the-scroll-bar-menu-bar-tool-bar-tooltips-and-the-start-screens][Disable the scroll bar, menu bar, tool bar, tooltips, and the start screens.]]
+  - [[#prettify-things][Prettify Things]]
+  - [[#line-numbers][Line numbers]]
+  - [[#miscellaneous-minor-modes][Miscellaneous Minor Modes]]
+- [[#fonts][Fonts]]
+- [[#indentations][Indentations]]
+- [[#all-the-icons][All The Icons]]
+  - [[#prerequisites][Prerequisites]]
+  - [[#package-installation][Package installation]]
+- [[#evil-mode][Evil Mode]]
+  - [[#base][Base]]
+  - [[#collection][Collection]]
+  - [[#evil-org][Evil Org]]
+  - [[#leader][Leader]]
+  - [[#additional-keybindings][Additional keybindings]]
+  - [[#miscellaneous-settings][Miscellaneous settings]]
+- [[#additional-packages][Additional Packages]]
+  - [[#which-key][Which Key]]
+  - [[#m-x-completion][M-x completion]]
+  - [[#tabs][Tabs]]
+  - [[#neotree][Neotree]]
+  - [[#magit][Magit]]
+  - [[#parentheses][Parentheses]]
+  - [[#mode-line][Mode line]]
+  - [[#undo-tree][Undo-Tree]]
+  - [[#formatter][Formatter]]
+  - [[#lsp][LSP]]
+  - [[#company][Company]]
+  - [[#flycheck][Flycheck]]
+  - [[#projectile][Projectile]]
+  - [[#dictionary][Dictionary]]
+  - [[#thesaurus][Thesaurus]]
+- [[#org-mode][Org Mode]]
+  - [[#org-download][Org-download]]
+  - [[#org-indent][Org-indent]]
+  - [[#pretty-entities][Pretty entities]]
+  - [[#org-bullets][Org bullets]]
+  - [[#org-ellipses][Org Ellipses]]
+  - [[#org-toc][Org TOC]]
+  - [[#org-agenda][Org Agenda]]
+  - [[#keywords][Keywords]]
+  - [[#org-roam][Org Roam]]
+- [[#functions][Functions]]
+  - [[#compilation][Compilation]]
+
 * Introduction
 An Emacs configuration for note taking, documenting and (potentially) development. Clone using:
 
 #+begin_src bash :tangle no
-git clone https://github.com/madhavan-raja/emacs-config.git ~/.emacs.d
+  git clone https://github.com/madhavan-raja/emacs-config.git ~/.emacs.d
 #+end_src
 
 Open =README.org= in Emacs and run:
 
 #+BEGIN_SRC emacs-lisp :tangle no
-(org-babel-tangle)
+  (org-babel-tangle)
 #+end_src
 
 Lastly, restart Emacs.
@@ -62,9 +120,9 @@ We set up melpa, use-package, and straight.el for installing package later on. M
 Set window title, start the application maximized and disable the startup screen.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
-(setq frame-title-format "%b - Emacs")
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
-(setq ring-bell-function 'ignore)
+  (setq frame-title-format "%b - Emacs")
+  (add-to-list 'default-frame-alist '(fullscreen . maximized))
+  (setq ring-bell-function 'ignore)
 #+end_src
 
 * Behaviour
@@ -89,21 +147,21 @@ Set window title, start the application maximized and disable the startup screen
 Disable the generation of backup files:
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
-(setq make-backup-files nil)
+  (setq make-backup-files nil)
 #+end_src
 
 ** Notifications
 Disable the notifications:
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
-(setq ring-bell-function 'ignore)
+  (setq ring-bell-function 'ignore)
 #+end_src
 
 ** ESC cancels the current command.
 Map the escape key to cancel the current command. Useful with =evil-mode=:
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 #+end_src
 
 ** Good scroll
@@ -138,7 +196,7 @@ Set the location of the custom files to =.custom= directory:
     (load-theme 'doom-dark+ t)
     (doom-themes-neotree-config))
 
-  (custom-set-faces `(default ((t (:background "#0E0E0E")))))
+  ; (custom-set-faces `(default ((t (:background "#0E0E0E")))))
 #+end_src
 
 * Basic Visual Adjustments
@@ -190,16 +248,16 @@ This replaces some text with icons. Also ligatures.
 
   (global-prettify-symbols-mode)
 #+end_src
+
 ** Line numbers
-Display line numbers when programming:
-Line numbers are useful. Relative line numbers even more so, since you don't have to do much maths with them (so if I'm on 321, and I want to go to 357, that means I have to... wait no that's not right... etc).
+Display line numbers when programming.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (global-display-line-numbers-mode)
   (setq display-line-numbers-type 'relative)
 #+end_src
 
-Sometimes line numbers can be distracting, so we disable them for certain modes.
+And sometimes line numbers can be distracting, so we disable them for certain modes.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (dolist (mode '(org-mode-hook
@@ -214,6 +272,7 @@ Sometimes line numbers can be distracting, so we disable them for certain modes.
     woman-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 #+END_SRC
+
 ** Miscellaneous Minor Modes
 These are some useful minor modes that I tend to use.
 
@@ -231,14 +290,16 @@ Set font and fringe background color:
   (add-to-list 'default-frame-alist '(font . "Iosevka Nerd Font-12"))
   (set-fontset-font t 'symbol "Twitter Color Emoji")
 #+END_SRC
+
 * Indentations
-Here we configure indentation. I prefer using tabs, but I convert them to spaces.
+Configuring indentation.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (setq-default indent-tabs-mode nil
       tab-width 2)
   (setq indent-line-function 'insert-tab)
 #+END_SRC
+
 * All The Icons
 Fonts used by =doom-modeline=.
 
@@ -246,18 +307,19 @@ Fonts used by =doom-modeline=.
 Install the fonts first by running:
 
 #+BEGIN_SRC emacs-lisp :tangle no
-(all-the-icons-install-fonts)
+  (all-the-icons-install-fonts)
 #+end_src
 
 ** Package installation
 Install the package using:
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
-(use-package all-the-icons)
+  (use-package all-the-icons)
 #+end_src
 
 * Evil Mode
 Here we install and configure evil, since I /cannot/ use the default Emacs keys. Evil is the only way I've managed to move to Emacs. The Vim key bindings are a /lot/ better than the Emacs keybindings. Evil-collection is for miscellaneous minor modes, evil-org for org mode, and evil-leader adds a leader key.
+
 ** Base
 This is the main evil package, that allows you to use vim keybindings.
 
@@ -271,7 +333,7 @@ This is the main evil package, that allows you to use vim keybindings.
 #+END_SRC
 
 ** Collection
-This package adds vim keybindings for miscellaneous minor modes, such as dired and mu4e.
+This package adds Vim keybindings for miscellaneous minor modes, such as dired and mu4e.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (use-package evil-collection
@@ -292,7 +354,7 @@ For some reason evil-collection doesn't include org bindings, so we install anot
 #+END_SRC
 
 ** Leader
-This adds a leader key to Emacs, which is /incredibly/ useful.
+This adds a leader key to Emacs, which is incredibly useful.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (use-package evil-leader
@@ -306,7 +368,7 @@ This adds a leader key to Emacs, which is /incredibly/ useful.
       ".e" 'eval-region
       ".s" 'straight-use-package
       ;; Configs
-      "ce" 'edit-emacs-configuration
+      "ce" (lambda () (interactive) (find-file "~/.emacs.d/README.org"))
       ;; Undo
       "uv" 'undo-tree-visualize
       "uu" 'undo-tree-undo
@@ -373,7 +435,6 @@ This adds a leader key to Emacs, which is /incredibly/ useful.
 Here I bind some extra keybindings for evil mode.
     
 #+BEGIN_SRC emacs-lisp :tangle init.el
-
   (define-key evil-normal-state-map (kbd "M-s") 'save-buffer)
   (define-key evil-normal-state-map (kbd "M-q") 'delete-window)
   (define-key evil-normal-state-map (kbd "M-w") 'kill-current-buffer)
@@ -452,7 +513,7 @@ We install which-key in case we ever forget any keybinds.
     (setq which-key-idle-delay 0.1))
 #+END_SRC
 
-** Vertico
+** M-x completion
 Vertico helps with better completion and to replace the default M-x. Consult adds a few things. Orderless adds fuzzy findings, marginalia adds stuff to your minibuffer.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
@@ -462,11 +523,14 @@ Vertico helps with better completion and to replace the default M-x. Consult add
     :straight (consult-projectile :type git :host gitlab :repo "OlMon/consult-projectile" :branch "master"))
 
   (use-package vertico
-    :init (vertico-mode 1)
+    :ensure t
+    :bind (:map vertico-map
+           ("C-j" . vertico-next)
+           ("C-k" . vertico-previous))
+    :init
+    (vertico-mode)
     :config
-    (setq vertico-resize nil
-          vertico-count 15
-          vertico-cycle t))
+    (setq vertico-cycle t))
 
   (use-package orderless
     :init
@@ -475,21 +539,12 @@ Vertico helps with better completion and to replace the default M-x. Consult add
           completion-category-overrides '((file (styles partial-completion)))))
 
   (use-package marginalia
-    :init (marginalia-mode))
-
-  (use-package vertico-posframe
-    :init (vertico-posframe-mode))
-
-  (setq vertico-posframe-parameters
-       '((left-fringe . 5)
-         (right-fringe . 5)))
-
-  (set-face-attribute 'vertico-posframe-border nil :background "#0E0E0E")
-
-  (setq vertico-posframe-border-width 3
-      vertico-posframe-width 50
-      vertico-posframe-height 15
-      vertico-posframe-font "Iosevka Nerd Font-14")
+    :after vertico
+    :ensure t
+    :custom
+    (maarginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
+    :init
+    (marginalia-mode))
 #+END_SRC
 
 ** Tabs
@@ -504,13 +559,14 @@ The centaur tabs package adds tabs to Emacs.
     (dashboard-mode . centaur-tabs-local-mode)
     (term-mode . centaur-tabs-local-mode)
     (special-mode . centaur-tabs-local-mode))
+
   (setq centaur-tabs-height 32
     centaur-tabs-gray-out-icons 'buffer
     centaur-tabs-set-modified-marker t
     centaur-tabs-set-icons t)
 #+end_src
 
-** File Tree
+** Neotree
 Neotree is a cool file tree, so we install it. Although I usually use dired, neotree can be useful if you need a tree layout.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
@@ -527,7 +583,7 @@ Neotree is a cool file tree, so we install it. Although I usually use dired, neo
              (define-key evil-normal-state-local-map (kbd "H") 'neotree-hidden-file-toggle)))
   (setq neo-window-fixed-size nil)
 
-  '(neo-dir-link-face ((t (:foreground "deep sky blue" :slant normal :weight bold :height 120 :family "Fira Code"))))
+  '(neo-dir-link-face ((t (:foreground "deep sky blue" :slant normal :weight bold :height 100 :family "Fira Code"))))
   '(neo-file-link-face ((t (:foreground "White" :weight normal :height 120 :family "Fira Code"))))
 #+END_SRC
 
@@ -544,9 +600,9 @@ Magit is the best git client, and it is a /must/. Less typing, less time spent u
 Most code editors automatically match parentheses, but Emacs doesn't do this, so we install a package.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
-    (use-package smartparens
-      :config (smartparens-global-mode)
-      (show-smartparens-mode))
+  (use-package smartparens
+    :config (smartparens-global-mode)
+    (show-smartparens-mode))
 #+END_SRC
 
 *** Rainbow parentheses
@@ -566,10 +622,10 @@ The default mode line is ugly, so this package replaces it with one that looks l
     :init
     (doom-modeline-mode 1)
     (setq doom-modeline-height 30
-      doom-modeline-bar-width 3
+      doom-modeline-bar-width 1
       doom-modeline-buffer-encoding 'nondefault
       doom-modeline-major-mode-icon t
-      doom-modeline-icon t))
+      doom-modeline-icon nil))
 
   (doom-modeline-def-modeline 'main
       '(bar modals buffer-info-simple remote-host " " major-mode workspace-name)
@@ -592,8 +648,6 @@ We want to visualize the undo history better, so we install the undo-tree packag
   (use-package undo-tree
     :config
     (global-undo-tree-mode))
-    (setq undo-tree-auto-save-history t)
-    ; (setq undo-tree-history-directory-alist '(("." . "./undo")))
 #+END_SRC
 
 ** Formatter
@@ -610,22 +664,23 @@ I use Emacs for coding as well, so we're going to configure lsp-mode.
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (use-package lsp-mode
     :init
-    :hook ((lsp-mode . lsp-enable-which-key-integration))
-    ;        (lua-mode . lsp)
-    ;        ;;(python-mode . lsp)
-    ;        (sh-mode . lsp)
-    ;        (lisp-mode . lsp)
-    ;        (css-mode . lsp)
-    ;        (html-mode . lsp)
-    ;        (json-mode . lsp)
-    ;        (markdown-mode . lsp)
-    ;        (latex-mode . lsp)
-    ;        (go-mode . lsp)
-    ;        (text-mode . lsp)
-    ;        (org-mode . lsp)
+    :hook (prog-mode . lsp-mode)
+           ; (lua-mode . lsp)
+           ; (python-mode . lsp)
+           ; (sh-mode . lsp)
+           ; (lisp-mode . lsp)
+           ; (css-mode . lsp)
+           ; (html-mode . lsp)
+           ; (json-mode . lsp)
+           ; (markdown-mode . lsp)
+           ; (latex-mode . lsp)
+           ; (go-mode . lsp)
+           ; (text-mode . lsp)
+           ; (org-mode . lsp-mode))
     :commands lsp
     :config
     (setq lsp-enable-symbol-highlighting nil
+        lsp-enable-which-key-integration t
         lsp-ui-doc-enable t
         lsp-lens-enable nil
         lsp-headerline-breadcrumb-enable nil
@@ -638,20 +693,14 @@ I use Emacs for coding as well, so we're going to configure lsp-mode.
         lsp-log-io nil
         lsp-enable-file-watchers nil))
 
-  (use-package lsp-grammarly)
+  ; (use-package lsp-grammarly)
 
   (use-package lsp-ui :commands lsp-ui-mode)
 
+  (use-package lsp-treemacs
+    :after lsp)
+
   (setq lsp-enable-symbol-highlighting nil)
-
-  (use-package go-mode)
-  (use-package json-mode)
-  (use-package lua-mode)
-  (use-package nix-mode)
-  ;;(use-package lsp-jedi
-  ;;  :hook (python-mode . lsp-jedi)) ;; Doesn't work atm
-
-  (use-package lsp-ivy)
 #+end_src
 
 ** Company
@@ -659,43 +708,30 @@ Company is used for completions.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (use-package company
-    :config (global-company-mode)
+    :after lsp-mode
+    :hook (lsp-mode . company-mode)
     :bind (:map company-active-map
-                ("<tab>" . company-select-next)))
+                ("<tab>" . company-complete-selection))
+          (:map lsp-mode-map
+                ("<tab>" . company-indent-or-complete-common))
+    :custom
+    (company-minimum-prefix-length 1)
+    (company-idle-delay 0.0))
 
-  (use-package company-statistics
-    :hook (company-mode . company-statistics-mode))
-
-  (use-package company-quickhelp
-    :hook (company-mode . company-quickhelp-mode))
-
-  (setq-default company-backends '(company-capf
-                                   company-yasnippet
-                                   company-keywords
-                                   compny-files
-                                   company-ispell))
-
-  (setq company-idle-delay 0.1
-        company-minimum-prefix-length 1
-        company-selection-wrap-around t
-        company-require-match 'never
-        company-dabbrev-downcase nil
-        company-dabbrev-ignore-case t
-        company-dabbrev-other-buffers nil
-        company-tooltip-limit 5
-        company-tooltip-minimum-width 50)
+  ; (setq company-idle-delay 0
+  ;       company-minimum-prefix-length 1
+  ;       company-selection-wrap-around t
+  ;       company-require-match 'never
+  ;       company-dabbrev-downcase nil
+  ;       company-dabbrev-ignore-case t
+  ;       company-dabbrev-other-buffers nil
+  ;       company-tooltip-limit 5
+  ;       company-tooltip-minimum-width 50)
 
   (use-package company-box
-    :hook (company-mode . company-box-mode)
-    :config
-    (setq company-box-scrollbar nil))
-
-
-  ; (use-package yasnippet
-  ;   :hook (prog-mode . yas-global-mode))
-
-  ; (use-package yasnippet-snippets
-  ;   :defer t)
+    :hook (company-mode . company-box-mode))
+    ; :config
+    ; (setq company-box-scrollbar nil))
 #+END_SRC
 
 ** Flycheck
@@ -747,92 +783,42 @@ Indent the contents of an org document:
 Render a handful of LaTeX expressions:
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
-(add-hook 'org-mode-hook 'org-toggle-pretty-entities)
+  ; (add-hook 'org-mode-hook 'org-toggle-pretty-entities)
 #+end_src
 
 ** Org bullets
 Customize the face of the bullets
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
-(use-package org-bullets
-  :ensure t
-  :init
-  (setq org-bullets-face-name "Inconsolata-8")
-  (setq org-bullets-bullet-list
-        '("◉" "○" "►" "◇"))
-  :config
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+  (use-package org-bullets
+    :ensure t
+    :init
+    (setq org-bullets-face-name "Inconsolata-8")
+    (setq org-bullets-bullet-list
+          '("◉" "○" "►" "◇"))
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 #+end_src
 
-** Exporting
-Let's set the export backends to things I commonly use, along with some extra settings for HTML exports.
-
-#+BEGIN_SRC emacs-lisp :tangle init.el
-  (setq org-export-backends '(latex md html man))
-
-  (require 'org)
-  (require 'ox-latex)
-  (require 'ox-man)
-  (require 'ox-publish)
-
-  (setq org-publish-use-timestamps-flag nil
-      org-export-with-toc nil
-      org-export-with-broken-links t)
-
-  (setq org-publish-project-alist
-        '(
-          ("Blog"
-           :base-directory "~/Blog/"
-           :base-extension "org" "png" "jpg" "css"
-           :publishing-directory "~/Blog/"
-           :recursive t
-           :publishing-function org-html-publish-to-html
-           :headline-levels 4
-           :auto-preamble t
-           )
-          ("Garden"
-           :base-directory "~/Org/"
-           :base-extension "org" "css" "png"
-           :publishing-directory "~/Garden/"
-           :recursive nil
-           :publishing-function org-html-publish-to-html
-           :auto-preamble t
-           )
-        ))
-
-  (add-to-list 'org-latex-packages-alist '("" "minted"))
-  (setq org-latex-listings 'minted) 
-
-  (use-package htmlize)
-
-  (setq org-latex-pdf-process
-        '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-          "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-          "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
-
-  (setq org-src-fontify-natively t)
-
-  (setq org-export-with-section-numbers nil)
-
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((R . t)
-     (shell . t)
-     (latex . t)))
-  (setq org-html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"./style.css\"/>"
-    org-html-doctype "html5")
-#+END_SRC
 ** Org Ellipses
 Change the character for the ellipses:
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
-(setq org-ellipsis " ⤵")
+  (setq org-ellipsis " ⤵")
 #+end_src
+
+** Org TOC
+We like table of contents, right?
+
+#+BEGIN_SRC emacs-lisp :tangle init.el
+  (use-package toc-org)
+#+end_src
+
 ** Org Agenda
 Set =org-agenda-files= to the Roam directory:
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
-(setq org-agenda-files '("~/RoamNotes"))
+  (setq org-agenda-files '("~/RoamNotes"))
 #+end_src
 
 ** Keywords
@@ -840,19 +826,18 @@ Let's add our own custom keywords and highlight them
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (setq org-todo-keywords
-       '((sequence "TODO" "WAITING" "PAUSED" "ALMOST" "OPTIONAL" "IMPORTANT" "DONE")))
+       '((sequence "TODO" "WAITING" "PAUSED" "CANCELLED" "OPTIONAL" "IMPORTANT" "DONE")))
   (setq org-todo-keyword-faces
     '(("TODO"      . (:foreground "#FF8080" :weight bold))
       ("WAITING"   . (:foreground "#FFFE80" :weight bold))
       ("PAUSED"    . (:foreground "#D5D5D5" :weight bold))
-      ("ALMOST"    . (:foreground "#80D1FF" :weight bold))
+      ("CANCELLED" . (:foreground "#80D1FF" :weight bold))
       ("OPTIONAL"  . (:foreground "#C780FF" :weight bold))
       ("IMPORTANT" . (:foreground "#80FFE4" :weight bold))
       ("DONE"      . (:foreground "#97D59B" :weight bold))))
 #+END_SRC
 
 ** Org Roam
-*** Base
 The normal Org Roam.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
@@ -864,35 +849,11 @@ The normal Org Roam.
     :config
     (org-roam-setup))
 #+END_SRC
-
-*** Org Roam UI
-Visualize Roam Notes. Creates a server.
-#+BEGIN_SRC emacs-lisp :tangle init.el
-  ; (use-package org-roam-ui
-  ;   :straight
-  ;   (:host github :repo "org-roam/org-roam-ui" :branch "main" :files ("*.el" "out"))
-  ;   :after org-roam
-  ;   :hook (after-init . org-roam-ui-mode)
-  ;   :config
-  ;   (setq org-roam-ui-sync-theme t
-  ;         org-roam-ui-follow t
-  ;         org-roam-ui-update-on-save t
-  ;         org-roam-ui-open-on-start 'nil))
-#+END_SRC
-** Functions
-*** Open Configuration File
-A functino to open the Emacs configuration file.
+* Functions
+** Compilation
+A keybind for compilation.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
-(defun edit-emacs-configuration ()
-  "Open the init file."
-  (interactive)
-  (find-file "~/.emacs.d/README.org"))
-#+end_src
-** Present
-Make presentations with org mode.
-
-#+BEGIN_SRC emacs-lisp :tangle init.el
-  (use-package org-present)
+  (global-set-key (kbd "<f9>") 'compile)
 #+END_SRC
 

@@ -82,7 +82,7 @@
   (load-theme 'doom-dark+ t)
   (doom-themes-neotree-config))
 
-(custom-set-faces `(default ((t (:background "#0E0E0E")))))
+; (custom-set-faces `(default ((t (:background "#0E0E0E")))))
 
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
@@ -184,7 +184,7 @@
     ".e" 'eval-region
     ".s" 'straight-use-package
     ;; Configs
-    "ce" 'edit-emacs-configuration
+    "ce" (lambda () (interactive) (find-file "~/.emacs.d/README.org"))
     ;; Undo
     "uv" 'undo-tree-visualize
     "uu" 'undo-tree-undo
@@ -313,11 +313,14 @@
   :straight (consult-projectile :type git :host gitlab :repo "OlMon/consult-projectile" :branch "master"))
 
 (use-package vertico
-  :init (vertico-mode 1)
+  :ensure t
+  :bind (:map vertico-map
+         ("C-j" . vertico-next)
+         ("C-k" . vertico-previous))
+  :init
+  (vertico-mode)
   :config
-  (setq vertico-resize nil
-        vertico-count 15
-        vertico-cycle t))
+  (setq vertico-cycle t))
 
 (use-package orderless
   :init
@@ -326,21 +329,12 @@
         completion-category-overrides '((file (styles partial-completion)))))
 
 (use-package marginalia
-  :init (marginalia-mode))
-
-(use-package vertico-posframe
-  :init (vertico-posframe-mode))
-
-(setq vertico-posframe-parameters
-     '((left-fringe . 5)
-       (right-fringe . 5)))
-
-(set-face-attribute 'vertico-posframe-border nil :background "#0E0E0E")
-
-(setq vertico-posframe-border-width 3
-    vertico-posframe-width 50
-    vertico-posframe-height 15
-    vertico-posframe-font "Iosevka Nerd Font-14")
+  :after vertico
+  :ensure t
+  :custom
+  (maarginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
+  :init
+  (marginalia-mode))
 
 (use-package centaur-tabs
   :demand
@@ -350,6 +344,7 @@
   (dashboard-mode . centaur-tabs-local-mode)
   (term-mode . centaur-tabs-local-mode)
   (special-mode . centaur-tabs-local-mode))
+
 (setq centaur-tabs-height 32
   centaur-tabs-gray-out-icons 'buffer
   centaur-tabs-set-modified-marker t
@@ -368,7 +363,7 @@
            (define-key evil-normal-state-local-map (kbd "H") 'neotree-hidden-file-toggle)))
 (setq neo-window-fixed-size nil)
 
-'(neo-dir-link-face ((t (:foreground "deep sky blue" :slant normal :weight bold :height 120 :family "Fira Code"))))
+'(neo-dir-link-face ((t (:foreground "deep sky blue" :slant normal :weight bold :height 100 :family "Fira Code"))))
 '(neo-file-link-face ((t (:foreground "White" :weight normal :height 120 :family "Fira Code"))))
 
 (use-package magit
@@ -386,10 +381,10 @@
   :init
   (doom-modeline-mode 1)
   (setq doom-modeline-height 30
-    doom-modeline-bar-width 3
+    doom-modeline-bar-width 1
     doom-modeline-buffer-encoding 'nondefault
     doom-modeline-major-mode-icon t
-    doom-modeline-icon t))
+    doom-modeline-icon nil))
 
 (doom-modeline-def-modeline 'main
     '(bar modals buffer-info-simple remote-host " " major-mode workspace-name)
@@ -407,30 +402,29 @@
 (use-package undo-tree
   :config
   (global-undo-tree-mode))
-  (setq undo-tree-auto-save-history t)
-  ; (setq undo-tree-history-directory-alist '(("." . "./undo")))
 
 (use-package format-all
   :init (format-all-mode))
 
 (use-package lsp-mode
   :init
-  :hook ((lsp-mode . lsp-enable-which-key-integration))
-  ;        (lua-mode . lsp)
-  ;        ;;(python-mode . lsp)
-  ;        (sh-mode . lsp)
-  ;        (lisp-mode . lsp)
-  ;        (css-mode . lsp)
-  ;        (html-mode . lsp)
-  ;        (json-mode . lsp)
-  ;        (markdown-mode . lsp)
-  ;        (latex-mode . lsp)
-  ;        (go-mode . lsp)
-  ;        (text-mode . lsp)
-  ;        (org-mode . lsp)
+  :hook (prog-mode . lsp-mode)
+         ; (lua-mode . lsp)
+         ; (python-mode . lsp)
+         ; (sh-mode . lsp)
+         ; (lisp-mode . lsp)
+         ; (css-mode . lsp)
+         ; (html-mode . lsp)
+         ; (json-mode . lsp)
+         ; (markdown-mode . lsp)
+         ; (latex-mode . lsp)
+         ; (go-mode . lsp)
+         ; (text-mode . lsp)
+         ; (org-mode . lsp-mode))
   :commands lsp
   :config
   (setq lsp-enable-symbol-highlighting nil
+      lsp-enable-which-key-integration t
       lsp-ui-doc-enable t
       lsp-lens-enable nil
       lsp-headerline-breadcrumb-enable nil
@@ -443,59 +437,40 @@
       lsp-log-io nil
       lsp-enable-file-watchers nil))
 
-(use-package lsp-grammarly)
+; (use-package lsp-grammarly)
 
 (use-package lsp-ui :commands lsp-ui-mode)
 
+(use-package lsp-treemacs
+  :after lsp)
+
 (setq lsp-enable-symbol-highlighting nil)
 
-(use-package go-mode)
-(use-package json-mode)
-(use-package lua-mode)
-(use-package nix-mode)
-;;(use-package lsp-jedi
-;;  :hook (python-mode . lsp-jedi)) ;; Doesn't work atm
-
-(use-package lsp-ivy)
-
 (use-package company
-  :config (global-company-mode)
+  :after lsp-mode
+  :hook (lsp-mode . company-mode)
   :bind (:map company-active-map
-              ("<tab>" . company-select-next)))
+              ("<tab>" . company-complete-selection))
+        (:map lsp-mode-map
+              ("<tab>" . company-indent-or-complete-common))
+  :custom
+  (company-minimum-prefix-length 1)
+  (company-idle-delay 0.0))
 
-(use-package company-statistics
-  :hook (company-mode . company-statistics-mode))
-
-(use-package company-quickhelp
-  :hook (company-mode . company-quickhelp-mode))
-
-(setq-default company-backends '(company-capf
-                                 company-yasnippet
-                                 company-keywords
-                                 compny-files
-                                 company-ispell))
-
-(setq company-idle-delay 0.1
-      company-minimum-prefix-length 1
-      company-selection-wrap-around t
-      company-require-match 'never
-      company-dabbrev-downcase nil
-      company-dabbrev-ignore-case t
-      company-dabbrev-other-buffers nil
-      company-tooltip-limit 5
-      company-tooltip-minimum-width 50)
+; (setq company-idle-delay 0
+;       company-minimum-prefix-length 1
+;       company-selection-wrap-around t
+;       company-require-match 'never
+;       company-dabbrev-downcase nil
+;       company-dabbrev-ignore-case t
+;       company-dabbrev-other-buffers nil
+;       company-tooltip-limit 5
+;       company-tooltip-minimum-width 50)
 
 (use-package company-box
-  :hook (company-mode . company-box-mode)
-  :config
-  (setq company-box-scrollbar nil))
-
-
-; (use-package yasnippet
-;   :hook (prog-mode . yas-global-mode))
-
-; (use-package yasnippet-snippets
-;   :defer t)
+  :hook (company-mode . company-box-mode))
+  ; :config
+  ; (setq company-box-scrollbar nil))
 
 ; (use-package flycheck
 ;   :ensure t
@@ -512,7 +487,7 @@
 
 (add-hook 'org-mode-hook 'org-indent-mode)
 
-(add-hook 'org-mode-hook 'org-toggle-pretty-entities)
+; (add-hook 'org-mode-hook 'org-toggle-pretty-entities)
 
 (use-package org-bullets
   :ensure t
@@ -523,71 +498,19 @@
   :config
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
-(setq org-export-backends '(latex md html man))
-
-(require 'org)
-(require 'ox-latex)
-(require 'ox-man)
-(require 'ox-publish)
-
-(setq org-publish-use-timestamps-flag nil
-    org-export-with-toc nil
-    org-export-with-broken-links t)
-
-(setq org-publish-project-alist
-      '(
-        ("Blog"
-         :base-directory "~/Blog/"
-         :base-extension "org" "png" "jpg" "css"
-         :publishing-directory "~/Blog/"
-         :recursive t
-         :publishing-function org-html-publish-to-html
-         :headline-levels 4
-         :auto-preamble t
-         )
-        ("Garden"
-         :base-directory "~/Org/"
-         :base-extension "org" "css" "png"
-         :publishing-directory "~/Garden/"
-         :recursive nil
-         :publishing-function org-html-publish-to-html
-         :auto-preamble t
-         )
-      ))
-
-(add-to-list 'org-latex-packages-alist '("" "minted"))
-(setq org-latex-listings 'minted) 
-
-(use-package htmlize)
-
-(setq org-latex-pdf-process
-      '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-        "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-        "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
-
-(setq org-src-fontify-natively t)
-
-(setq org-export-with-section-numbers nil)
-
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((R . t)
-   (shell . t)
-   (latex . t)))
-(setq org-html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"./style.css\"/>"
-  org-html-doctype "html5")
-
 (setq org-ellipsis " ⤵")
+
+(use-package toc-org)
 
 (setq org-agenda-files '("~/RoamNotes"))
 
 (setq org-todo-keywords
-     '((sequence "TODO" "WAITING" "PAUSED" "ALMOST" "OPTIONAL" "IMPORTANT" "DONE")))
+     '((sequence "TODO" "WAITING" "PAUSED" "CANCELLED" "OPTIONAL" "IMPORTANT" "DONE")))
 (setq org-todo-keyword-faces
   '(("TODO"      . (:foreground "#FF8080" :weight bold))
     ("WAITING"   . (:foreground "#FFFE80" :weight bold))
     ("PAUSED"    . (:foreground "#D5D5D5" :weight bold))
-    ("ALMOST"    . (:foreground "#80D1FF" :weight bold))
+    ("CANCELLED" . (:foreground "#80D1FF" :weight bold))
     ("OPTIONAL"  . (:foreground "#C780FF" :weight bold))
     ("IMPORTANT" . (:foreground "#80FFE4" :weight bold))
     ("DONE"      . (:foreground "#97D59B" :weight bold))))
@@ -600,20 +523,4 @@
   :config
   (org-roam-setup))
 
-; (use-package org-roam-ui
-;   :straight
-;   (:host github :repo "org-roam/org-roam-ui" :branch "main" :files ("*.el" "out"))
-;   :after org-roam
-;   :hook (after-init . org-roam-ui-mode)
-;   :config
-;   (setq org-roam-ui-sync-theme t
-;         org-roam-ui-follow t
-;         org-roam-ui-update-on-save t
-;         org-roam-ui-open-on-start 'nil))
-
-(defun edit-emacs-configuration ()
-  "Open the init file."
-  (interactive)
-  (find-file "~/.emacs.d/README.org"))
-
-(use-package org-present)
+(global-set-key (kbd "<f9>") 'compile)

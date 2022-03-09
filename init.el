@@ -366,18 +366,25 @@
   :config
   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
-(use-package doom-modeline
-  :init
-  (doom-modeline-mode 1)
-  (setq doom-modeline-height 30
-    doom-modeline-bar-width 1
-    doom-modeline-buffer-encoding 'nondefault
-    doom-modeline-major-mode-icon t
-    doom-modeline-icon nil))
+(setq display-time-default-load-average nil)
 
-(doom-modeline-def-modeline 'main
-    '(bar modals buffer-info-simple remote-host " " major-mode workspace-name)
-    '(buffer-position matches process checker lsp debug vcs))
+(line-number-mode)
+(column-number-mode)
+(display-time-mode -1)
+(size-indication-mode -1)
+
+(use-package doom-modeline
+  :init (doom-modeline-mode)
+  :config
+  (setq doom-modeline-buffer-file-name-style 'file-name
+        doom-modeline-height 30
+        doom-modeline-enable-word-count t
+        doom-modeline-buffer-encoding nil
+        doom-modeline-icon t
+        doom-modeline-modal-icon nil
+        doom-modeline-major-mode-icon t
+        doom-modeline-major-mode-color-icon t
+        doom-modeline-bar-width 3))
 
 (custom-set-faces
  '(mode-line ((t (:family "Iosevka Nerd Font" :height 120)))))

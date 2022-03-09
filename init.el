@@ -146,8 +146,11 @@
 ; (recentf-mode) ;; Recent files
 ; (add-hook 'org-mode-hook 'flyspell-mode) ;; Spell checker
 
-(add-to-list 'default-frame-alist '(font . "Iosevka Nerd Font-12"))
-(set-fontset-font t 'symbol "Twitter Color Emoji")
+(setq text-scale-mode-step 1.1)
+
+(set-face-attribute 'default nil :family "Iosevka Nerd Font" :weight 'regular :height 120)
+(set-face-attribute 'fixed-pitch nil :font "Iosevka Nerd Font" :weight 'regular :height 1.0)
+(set-face-attribute 'variable-pitch nil :font "Times New Roman" :height 120)
 
 (setq-default indent-tabs-mode nil
     tab-width 2)

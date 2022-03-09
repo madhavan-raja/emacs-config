@@ -289,8 +289,11 @@ These are some useful minor modes that I tend to use.
 Set font and fringe background color:
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
-  (add-to-list 'default-frame-alist '(font . "Iosevka Nerd Font-12"))
-  (set-fontset-font t 'symbol "Twitter Color Emoji")
+  (setq text-scale-mode-step 1.1)
+
+  (set-face-attribute 'default nil :family "Iosevka Nerd Font" :weight 'regular :height 120)
+  (set-face-attribute 'fixed-pitch nil :font "Iosevka Nerd Font" :weight 'regular :height 1.0)
+  (set-face-attribute 'variable-pitch nil :font "Times New Roman" :height 120)
 #+END_SRC
 
 * Indentations

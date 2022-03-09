@@ -352,10 +352,15 @@ For some reason evil-collection doesn't include org bindings, so we install anot
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (use-package evil-org
+    :diminish evil-org-mode
     :after org
     :config
-    (require 'evil-org-agenda)
-    (evil-org-agenda-set-keys))
+    (add-hook 'org-mode-hook 'evil-org-mode)
+    (add-hook 'evil-org-mode-hook
+              (lambda () (evil-org-set-key-theme))))
+
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys)
 #+END_SRC
 
 ** Leader

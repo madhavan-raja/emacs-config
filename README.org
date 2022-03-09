@@ -93,20 +93,20 @@ We set up melpa, use-package, and straight.el for installing package later on. M
   (require 'use-package)
 
   (setq use-package-always-ensure t)
-  (setq straight-use-package-by-default t)
+  ; (setq straight-use-package-by-default t)
 
-  (defvar bootstrap-version)
-  (let ((bootstrap-file
-         (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-        (bootstrap-version 5))
-    (unless (file-exists-p bootstrap-file)
-      (with-current-buffer
-          (url-retrieve-synchronously
-           "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-           'silent 'inhibit-cookies)
-        (goto-char (point-max))
-        (eval-print-last-sexp)))
-    (load bootstrap-file nil 'nomessage))
+  ; (defvar bootstrap-version)
+  ; (let ((bootstrap-file
+  ;        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+  ;       (bootstrap-version 5))
+  ;   (unless (file-exists-p bootstrap-file)
+  ;     (with-current-buffer
+  ;         (url-retrieve-synchronously
+  ;          "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+  ;          'silent 'inhibit-cookies)
+  ;       (goto-char (point-max))
+  ;       (eval-print-last-sexp)))
+  ;   (load bootstrap-file nil 'nomessage))
   (setq package-enable-at-startup nil)
 
   (use-package auto-package-update
@@ -519,8 +519,8 @@ Vertico helps with better completion and to replace the default M-x. Consult add
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (use-package consult)
 
-  (use-package consult-projectile
-    :straight (consult-projectile :type git :host gitlab :repo "OlMon/consult-projectile" :branch "master"))
+  ; (use-package consult-projectile
+  ;   :straight (consult-projectile :type git :host gitlab :repo "OlMon/consult-projectile" :branch "master"))
 
   (use-package vertico
     :ensure t
@@ -546,25 +546,6 @@ Vertico helps with better completion and to replace the default M-x. Consult add
     :init
     (marginalia-mode))
 #+END_SRC
-
-** Tabs
-The centaur tabs package adds tabs to Emacs.
-
-#+BEGIN_SRC emacs-lisp :tangle init.el 
-  (use-package centaur-tabs
-    :demand
-    :config
-    (centaur-tabs-mode t)
-    :hook
-    (dashboard-mode . centaur-tabs-local-mode)
-    (term-mode . centaur-tabs-local-mode)
-    (special-mode . centaur-tabs-local-mode))
-
-  (setq centaur-tabs-height 32
-    centaur-tabs-gray-out-icons 'buffer
-    centaur-tabs-set-modified-marker t
-    centaur-tabs-set-icons t)
-#+end_src
 
 ** Neotree
 Neotree is a cool file tree, so we install it. Although I usually use dired, neotree can be useful if you need a tree layout.
@@ -786,7 +767,7 @@ Render a handful of LaTeX expressions:
   ; (add-hook 'org-mode-hook 'org-toggle-pretty-entities)
 #+end_src
 
-** Org bullets
+** Org Bullets
 Customize the face of the bullets
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
@@ -795,7 +776,7 @@ Customize the face of the bullets
     :init
     (setq org-bullets-face-name "Inconsolata-8")
     (setq org-bullets-bullet-list
-          '("◉" "○" "►" "◇"))
+          '("•"))
     :config
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 #+end_src

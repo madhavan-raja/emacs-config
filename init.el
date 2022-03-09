@@ -13,20 +13,20 @@
 (require 'use-package)
 
 (setq use-package-always-ensure t)
-(setq straight-use-package-by-default t)
+; (setq straight-use-package-by-default t)
 
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 5))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
+; (defvar bootstrap-version)
+; (let ((bootstrap-file
+;        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+;       (bootstrap-version 5))
+;   (unless (file-exists-p bootstrap-file)
+;     (with-current-buffer
+;         (url-retrieve-synchronously
+;          "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+;          'silent 'inhibit-cookies)
+;       (goto-char (point-max))
+;       (eval-print-last-sexp)))
+;   (load bootstrap-file nil 'nomessage))
 (setq package-enable-at-startup nil)
 
 (use-package auto-package-update
@@ -309,8 +309,8 @@
 
 (use-package consult)
 
-(use-package consult-projectile
-  :straight (consult-projectile :type git :host gitlab :repo "OlMon/consult-projectile" :branch "master"))
+; (use-package consult-projectile
+;   :straight (consult-projectile :type git :host gitlab :repo "OlMon/consult-projectile" :branch "master"))
 
 (use-package vertico
   :ensure t
@@ -335,20 +335,6 @@
   (maarginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
   :init
   (marginalia-mode))
-
-(use-package centaur-tabs
-  :demand
-  :config
-  (centaur-tabs-mode t)
-  :hook
-  (dashboard-mode . centaur-tabs-local-mode)
-  (term-mode . centaur-tabs-local-mode)
-  (special-mode . centaur-tabs-local-mode))
-
-(setq centaur-tabs-height 32
-  centaur-tabs-gray-out-icons 'buffer
-  centaur-tabs-set-modified-marker t
-  centaur-tabs-set-icons t)
 
 (use-package neotree)
 (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
@@ -494,7 +480,7 @@
   :init
   (setq org-bullets-face-name "Inconsolata-8")
   (setq org-bullets-bullet-list
-        '("◉" "○" "►" "◇"))
+        '("•"))
   :config
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 

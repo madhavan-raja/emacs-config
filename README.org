@@ -143,6 +143,7 @@ Set window title, start the application maximized and disable the startup screen
   scroll-conservatively 10000
   smooth-scroll-margin 1)
 #+END_SRC
+
 ** Backup files
 Disable the generation of backup files:
 
@@ -189,6 +190,7 @@ Set the location of the custom files to =.custom= directory:
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (setq custom-file (expand-file-name ".custom" user-emacs-directory))
 #+end_src
+
 * Theme
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (use-package doom-themes

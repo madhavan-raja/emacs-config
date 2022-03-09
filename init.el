@@ -494,7 +494,7 @@
   :config
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
-(setq org-ellipsis " ⤵")
+(setq org-ellipsis " ⤵ ")
 
 (use-package toc-org)
 

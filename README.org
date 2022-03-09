@@ -797,7 +797,7 @@ Customize the face of the bullets
 Change the character for the ellipses:
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
-  (setq org-ellipsis " ⤵")
+  (setq org-ellipsis " ⤵ ")
 #+end_src
 
 ** Org TOC

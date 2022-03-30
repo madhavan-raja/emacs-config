@@ -402,7 +402,8 @@
 
 (use-package undo-tree
   :config
-  (global-undo-tree-mode))
+  (global-undo-tree-mode)
+  (setq undo-tree-auto-save-history nil))
 
 (use-package format-all
   :init (format-all-mode))

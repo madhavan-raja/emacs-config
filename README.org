@@ -645,7 +645,8 @@ We want to visualize the undo history better, so we install the undo-tree packag
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (use-package undo-tree
     :config
-    (global-undo-tree-mode))
+    (global-undo-tree-mode)
+    (setq undo-tree-auto-save-history nil))
 #+END_SRC
 
 ** Formatter

@@ -13,20 +13,6 @@
 (require 'use-package)
 
 (setq use-package-always-ensure t)
-; (setq straight-use-package-by-default t)
-
-; (defvar bootstrap-version)
-; (let ((bootstrap-file
-;        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-;       (bootstrap-version 5))
-;   (unless (file-exists-p bootstrap-file)
-;     (with-current-buffer
-;         (url-retrieve-synchronously
-;          "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-;          'silent 'inhibit-cookies)
-;       (goto-char (point-max))
-;       (eval-print-last-sexp)))
-;   (load bootstrap-file nil 'nomessage))
 (setq package-enable-at-startup nil)
 
 (use-package auto-package-update
@@ -81,8 +67,6 @@
   :config
   (load-theme 'doom-dark+ t)
   (doom-themes-neotree-config))
-
-; (custom-set-faces `(default ((t (:background "#0E0E0E")))))
 
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
@@ -143,8 +127,6 @@
 (save-place-mode) ;; Save location
 (global-visual-line-mode) ;; Wrap lines
 (global-auto-revert-mode) ;; Revert buffers
-; (recentf-mode) ;; Recent files
-; (add-hook 'org-mode-hook 'flyspell-mode) ;; Spell checker
 
 (setq text-scale-mode-step 1.1)
 
@@ -316,9 +298,6 @@
   (setq which-key-idle-delay 0.1))
 
 (use-package consult)
-
-; (use-package consult-projectile
-;   :straight (consult-projectile :type git :host gitlab :repo "OlMon/consult-projectile" :branch "master"))
 
 (use-package vertico
   :ensure t

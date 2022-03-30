@@ -93,20 +93,6 @@ We set up melpa, use-package, and straight.el for installing package later on. M
   (require 'use-package)
 
   (setq use-package-always-ensure t)
-  ; (setq straight-use-package-by-default t)
-
-  ; (defvar bootstrap-version)
-  ; (let ((bootstrap-file
-  ;        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-  ;       (bootstrap-version 5))
-  ;   (unless (file-exists-p bootstrap-file)
-  ;     (with-current-buffer
-  ;         (url-retrieve-synchronously
-  ;          "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-  ;          'silent 'inhibit-cookies)
-  ;       (goto-char (point-max))
-  ;       (eval-print-last-sexp)))
-  ;   (load bootstrap-file nil 'nomessage))
   (setq package-enable-at-startup nil)
 
   (use-package auto-package-update
@@ -128,20 +114,20 @@ Set window title, start the application maximized and disable the startup screen
 * Behaviour
 ** Basic settings
 #+BEGIN_SRC emacs-lisp :tangle init.el
-(setq-default
-  delete-by-moving-to-trash t ;; Move to trash instead of deleting
-  require-final-newline t ;; Auto create a newline at end of file
-  custom-safe-themes t ;; Don't ask if theme is safe
-  warning-minimum-level :emergency ;; Emacs, honestly, I want you to shut up
-  disabled-command-function nil ;; Yes I want to use that command
-  vc-follow-symlinks) ;; Follow those damn symlinks!
+  (setq-default
+    delete-by-moving-to-trash t ;; Move to trash instead of deleting
+    require-final-newline t ;; Auto create a newline at end of file
+    custom-safe-themes t ;; Don't ask if theme is safe
+    warning-minimum-level :emergency ;; Emacs, honestly, I want you to shut up
+    disabled-command-function nil ;; Yes I want to use that command
+    vc-follow-symlinks) ;; Follow those damn symlinks!
 
-(defalias 'yes-or-no-p 'y-or-n-p) ;; Y or N instead of yes or no
+  (defalias 'yes-or-no-p 'y-or-n-p) ;; Y or N instead of yes or no
 
-(setq scroll-margin 1
-  scroll-step 1
-  scroll-conservatively 10000
-  smooth-scroll-margin 1)
+  (setq scroll-margin 1
+    scroll-step 1
+    scroll-conservatively 10000
+    smooth-scroll-margin 1)
 #+END_SRC
 
 ** Backup files
@@ -169,19 +155,19 @@ Map the escape key to cancel the current command. Useful with =evil-mode=:
 A smoother pixel-based scrolling:
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
-(use-package emacs
-  :custom
-  (redisplay-dont-pause            t) ;; Fully redraw the display before it processes queued input events.
-  (next-screen-context-lines       2) ;; Number of lines of continuity to retain when scrolling by full screens
-  (scroll-conservatively       10000) ;; only 'jump' when moving this far off the screen
-  (scroll-step                     1) ;; Keyboard scroll one line at a time
-  (mouse-wheel-progressive-speed nil) ;; Don't accelerate scrolling
-  (mouse-wheel-follow-mouse        t) ;; Scroll window under mouse
-  (fast-but-imprecise-scrolling    t) ;; No (less) lag while scrolling lots.
-  (auto-window-vscroll           nil)) ;; Cursor move faster
+  (use-package emacs
+    :custom
+    (redisplay-dont-pause            t) ;; Fully redraw the display before it processes queued input events.
+    (next-screen-context-lines       2) ;; Number of lines of continuity to retain when scrolling by full screens
+    (scroll-conservatively       10000) ;; only 'jump' when moving this far off the screen
+    (scroll-step                     1) ;; Keyboard scroll one line at a time
+    (mouse-wheel-progressive-speed nil) ;; Don't accelerate scrolling
+    (mouse-wheel-follow-mouse        t) ;; Scroll window under mouse
+    (fast-but-imprecise-scrolling    t) ;; No (less) lag while scrolling lots.
+    (auto-window-vscroll           nil)) ;; Cursor move faster
 
-(use-package good-scroll
-  :hook (after-init . good-scroll-mode))
+  (use-package good-scroll
+    :hook (after-init . good-scroll-mode))
 #+end_src
 
 ** Custom File
@@ -197,8 +183,6 @@ Set the location of the custom files to =.custom= directory:
     :config
     (load-theme 'doom-dark+ t)
     (doom-themes-neotree-config))
-
-  ; (custom-set-faces `(default ((t (:background "#0E0E0E")))))
 #+end_src
 
 * Basic Visual Adjustments
@@ -282,8 +266,6 @@ These are some useful minor modes that I tend to use.
   (save-place-mode) ;; Save location
   (global-visual-line-mode) ;; Wrap lines
   (global-auto-revert-mode) ;; Revert buffers
-  ; (recentf-mode) ;; Recent files
-  ; (add-hook 'org-mode-hook 'flyspell-mode) ;; Spell checker
 #+END_SRC
 * Fonts
 Set font and fringe background color:
@@ -529,9 +511,6 @@ Vertico helps with better completion and to replace the default M-x. Consult add
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (use-package consult)
 
-  ; (use-package consult-projectile
-  ;   :straight (consult-projectile :type git :host gitlab :repo "OlMon/consult-projectile" :branch "master"))
-
   (use-package vertico
     :ensure t
     :bind (:map vertico-map
@@ -606,7 +585,7 @@ Most editors also automatically color matching parentheses, but we need to insta
 #+END_SRC
 
 ** Mode line
-The default mode line is ugly, so this package replaces it with one that looks like the doom mode line.
+The default mode line is ugly, so this package replaces it with one that looks like the Doom mode line.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (setq display-time-default-load-average nil)
@@ -639,8 +618,8 @@ The default mode line is ugly, so this package replaces it with one that looks l
     (neotree-mode . hide-mode-line-mode))
 #+END_SRC
 
-** Undo-Tree
-We want to visualize the undo history better, so we install the undo-tree package.
+** Undo Tree
+We want to visualize the undo history better, so we install the undo-tree package. Oh and we don't want to save the history.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (use-package undo-tree
@@ -717,20 +696,8 @@ Company is used for completions.
     (company-minimum-prefix-length 1)
     (company-idle-delay 0.0))
 
-  ; (setq company-idle-delay 0
-  ;       company-minimum-prefix-length 1
-  ;       company-selection-wrap-around t
-  ;       company-require-match 'never
-  ;       company-dabbrev-downcase nil
-  ;       company-dabbrev-ignore-case t
-  ;       company-dabbrev-other-buffers nil
-  ;       company-tooltip-limit 5
-  ;       company-tooltip-minimum-width 50)
-
   (use-package company-box
     :hook (company-mode . company-box-mode))
-    ; :config
-    ; (setq company-box-scrollbar nil))
 #+END_SRC
 
 ** Flycheck
@@ -750,19 +717,6 @@ Here, we install and configure projectile, which is a project interaction librar
     :config (projectile-mode 1))
 #+END_SRC
 
-** Dictionary
-Emacs has to have a dictionary.
-
-#+BEGIN_SRC emacs-lisp :tangle init.el
-  (use-package dictionary)
-#+end_src
-
-** Thesaurus
-If we need to find a synonym for any reason, this package will be helpful.
-
-#+BEGIN_SRC emacs-lisp :tangle init.el
-  (use-package mw-thesaurus)
-#+end_src
 * Org Mode
 ** Org-download
 Drag-and-drop images directly into Emacs!
@@ -772,27 +726,26 @@ Drag-and-drop images directly into Emacs!
 #+end_src
 
 ** Org-indent
-Indent the contents of an org document:
+Indent the contents of an Org document.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (add-hook 'org-mode-hook 'org-indent-mode)
 #+end_src
 
 ** Pretty entities
-Render a handful of LaTeX expressions:
+Renders a handful of LaTeX expressions.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
   ; (add-hook 'org-mode-hook 'org-toggle-pretty-entities)
 #+end_src
 
 ** Org Bullets
-Customize the face of the bullets
+Customize the face of the bullets.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (use-package org-bullets
     :ensure t
     :init
-    (setq org-bullets-face-name "Inconsolata-8")
     (setq org-bullets-bullet-list
           '("•"))
     :config
@@ -800,7 +753,7 @@ Customize the face of the bullets
 #+end_src
 
 ** Org Ellipses
-Change the character for the ellipses:
+Change the character for the ellipses.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (setq org-ellipsis " ⤵ ")
@@ -813,41 +766,20 @@ We like table of contents, right?
   (use-package toc-org)
 #+end_src
 
-** Org Agenda
-Set =org-agenda-files= to the Roam directory:
-
-#+BEGIN_SRC emacs-lisp :tangle init.el
-  (setq org-agenda-files '("~/RoamNotes"))
-#+end_src
-
 ** Keywords
-Let's add our own custom keywords and highlight them
+Let's add our own custom keywords and highlight them.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (setq org-todo-keywords
-       '((sequence "TODO" "WAITING" "PAUSED" "CANCELLED" "OPTIONAL" "IMPORTANT" "DONE")))
+       '((sequence "TODO" "IN PROGRESS" "CANCELLED" "DONE")))
+
   (setq org-todo-keyword-faces
     '(("TODO"      . (:foreground "#FF8080" :weight bold))
-      ("WAITING"   . (:foreground "#FFFE80" :weight bold))
-      ("PAUSED"    . (:foreground "#D5D5D5" :weight bold))
-      ("CANCELLED" . (:foreground "#80D1FF" :weight bold))
-      ("OPTIONAL"  . (:foreground "#C780FF" :weight bold))
-      ("IMPORTANT" . (:foreground "#80FFE4" :weight bold))
+      ("IN PROGRESS" . (:foreground "#80D1FF" :weight bold))
+      ("CANCELLED"   . (:foreground "#FFFE80" :weight bold))
       ("DONE"      . (:foreground "#97D59B" :weight bold))))
 #+END_SRC
 
-** Org Roam
-The normal Org Roam.
-
-#+BEGIN_SRC emacs-lisp :tangle init.el
-  (setq org-roam-v2-ack t)
-
-  (use-package org-roam
-    :custom
-    (org-roam-directory "~/RoamNotes/")
-    :config
-    (org-roam-setup))
-#+END_SRC
 * Functions
 ** Compilation
 A keybind for compilation.

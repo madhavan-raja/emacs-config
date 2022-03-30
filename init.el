@@ -459,20 +459,8 @@
   (company-minimum-prefix-length 1)
   (company-idle-delay 0.0))
 
-; (setq company-idle-delay 0
-;       company-minimum-prefix-length 1
-;       company-selection-wrap-around t
-;       company-require-match 'never
-;       company-dabbrev-downcase nil
-;       company-dabbrev-ignore-case t
-;       company-dabbrev-other-buffers nil
-;       company-tooltip-limit 5
-;       company-tooltip-minimum-width 50)
-
 (use-package company-box
   :hook (company-mode . company-box-mode))
-  ; :config
-  ; (setq company-box-scrollbar nil))
 
 ; (use-package flycheck
 ;   :ensure t
@@ -480,10 +468,6 @@
 
 (use-package projectile
   :config (projectile-mode 1))
-
-(use-package dictionary)
-
-(use-package mw-thesaurus)
 
 (use-package org-download)
 
@@ -494,7 +478,6 @@
 (use-package org-bullets
   :ensure t
   :init
-  (setq org-bullets-face-name "Inconsolata-8")
   (setq org-bullets-bullet-list
         '("•"))
   :config
@@ -504,25 +487,13 @@
 
 (use-package toc-org)
 
-(setq org-agenda-files '("~/RoamNotes"))
-
 (setq org-todo-keywords
-     '((sequence "TODO" "WAITING" "PAUSED" "CANCELLED" "OPTIONAL" "IMPORTANT" "DONE")))
+     '((sequence "TODO" "IN PROGRESS" "CANCELLED" "DONE")))
+
 (setq org-todo-keyword-faces
   '(("TODO"      . (:foreground "#FF8080" :weight bold))
-    ("WAITING"   . (:foreground "#FFFE80" :weight bold))
-    ("PAUSED"    . (:foreground "#D5D5D5" :weight bold))
-    ("CANCELLED" . (:foreground "#80D1FF" :weight bold))
-    ("OPTIONAL"  . (:foreground "#C780FF" :weight bold))
-    ("IMPORTANT" . (:foreground "#80FFE4" :weight bold))
+    ("IN PROGRESS" . (:foreground "#80D1FF" :weight bold))
+    ("CANCELLED"   . (:foreground "#FFFE80" :weight bold))
     ("DONE"      . (:foreground "#97D59B" :weight bold))))
-
-(setq org-roam-v2-ack t)
-
-(use-package org-roam
-  :custom
-  (org-roam-directory "~/RoamNotes/")
-  :config
-  (org-roam-setup))
 
 (global-set-key (kbd "<f9>") 'compile)

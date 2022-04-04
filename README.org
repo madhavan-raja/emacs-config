@@ -62,15 +62,15 @@
 * Introduction
 An Emacs configuration for note taking, documenting and (potentially) development. Clone using:
 
-#+begin_src bash :tangle no
+#+BEGIN_SRC bash :tangle no
   git clone https://github.com/madhavan-raja/emacs-config.git ~/.emacs.d
-#+end_src
+#+END_SRC
 
 Open =README.org= in Emacs and run:
 
 #+BEGIN_SRC emacs-lisp :tangle no
   (org-babel-tangle)
-#+end_src
+#+END_SRC
 
 Lastly, restart Emacs.
 
@@ -101,7 +101,7 @@ We set up melpa, use-package, and straight.el for installing package later on. M
      (setq auto-package-update-delete-old-versions t
            auto-package-update-interval 4)
      (auto-package-update-maybe))
-#+end_src
+#+END_SRC
 * Window
 Set window title, start the application maximized and disable the startup screen.
 
@@ -109,7 +109,7 @@ Set window title, start the application maximized and disable the startup screen
   (setq frame-title-format "%b - Emacs")
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
   (setq ring-bell-function 'ignore)
-#+end_src
+#+END_SRC
 
 * Behaviour
 ** Basic settings
@@ -135,21 +135,21 @@ Disable the generation of backup files:
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (setq make-backup-files nil)
-#+end_src
+#+END_SRC
 
 ** Notifications
 Disable the notifications:
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (setq ring-bell-function 'ignore)
-#+end_src
+#+END_SRC
 
 ** ESC cancels the current command.
 Map the escape key to cancel the current command. Useful with =evil-mode=:
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-#+end_src
+#+END_SRC
 
 ** Good scroll
 A smoother pixel-based scrolling:
@@ -168,14 +168,14 @@ A smoother pixel-based scrolling:
 
   (use-package good-scroll
     :hook (after-init . good-scroll-mode))
-#+end_src
+#+END_SRC
 
 ** Custom File
 Set the location of the custom files to =.custom= directory:
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (setq custom-file (expand-file-name ".custom" user-emacs-directory))
-#+end_src
+#+END_SRC
 
 * Theme
 #+BEGIN_SRC emacs-lisp :tangle init.el
@@ -183,7 +183,7 @@ Set the location of the custom files to =.custom= directory:
     :config
     (load-theme 'doom-dark+ t)
     (doom-themes-neotree-config))
-#+end_src
+#+END_SRC
 
 * Basic Visual Adjustments
 ** Disable the scroll bar, menu bar, tool bar, tooltips, and the start screens.
@@ -233,7 +233,7 @@ This replaces some text with icons. Also ligatures.
   (add-hook 'prog-mode-hook 'prog/prettify-set)
 
   (global-prettify-symbols-mode)
-#+end_src
+#+END_SRC
 
 ** Line numbers
 Display line numbers when programming.
@@ -241,7 +241,7 @@ Display line numbers when programming.
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (global-display-line-numbers-mode)
   (setq display-line-numbers-type 'relative)
-#+end_src
+#+END_SRC
 
 And sometimes line numbers can be distracting, so we disable them for certain modes.
 
@@ -295,14 +295,14 @@ Install the fonts first by running:
 
 #+BEGIN_SRC emacs-lisp :tangle no
   (all-the-icons-install-fonts)
-#+end_src
+#+END_SRC
 
 ** Package installation
 Install the package using:
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (use-package all-the-icons)
-#+end_src
+#+END_SRC
 
 * Evil Mode
 Here we install and configure evil, since I /cannot/ use the default Emacs keys. Evil is the only way I've managed to move to Emacs. The Vim key bindings are a /lot/ better than the Emacs keybindings. Evil-collection is for miscellaneous minor modes, evil-org for org mode, and evil-leader adds a leader key.
@@ -679,7 +679,7 @@ I use Emacs for coding as well, so we're going to configure lsp-mode.
     :after lsp)
 
   (setq lsp-enable-symbol-highlighting nil)
-#+end_src
+#+END_SRC
 
 ** Company
 Company is used for completions.
@@ -723,21 +723,21 @@ Drag-and-drop images directly into Emacs!
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (use-package org-download)
-#+end_src
+#+END_SRC
 
 ** Org-indent
 Indent the contents of an Org document.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (add-hook 'org-mode-hook 'org-indent-mode)
-#+end_src
+#+END_SRC
 
 ** Pretty entities
 Renders a handful of LaTeX expressions.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
   ; (add-hook 'org-mode-hook 'org-toggle-pretty-entities)
-#+end_src
+#+END_SRC
 
 ** Org Bullets
 Customize the face of the bullets.
@@ -750,21 +750,21 @@ Customize the face of the bullets.
           '("•"))
     :config
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
-#+end_src
+#+END_SRC
 
 ** Org Ellipses
 Change the character for the ellipses.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (setq org-ellipsis " ⤵ ")
-#+end_src
+#+END_SRC
 
 ** Org TOC
 We like table of contents, right?
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (use-package toc-org)
-#+end_src
+#+END_SRC
 
 ** SVG Tag Mode
 

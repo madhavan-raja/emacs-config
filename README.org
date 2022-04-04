@@ -273,8 +273,8 @@ Set font and fringe background color:
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (setq text-scale-mode-step 1.1)
 
-  (set-face-attribute 'default nil :family "Iosevka Nerd Font" :weight 'regular :height 120)
-  (set-face-attribute 'fixed-pitch nil :font "Iosevka Nerd Font" :weight 'regular :height 1.0)
+  (set-face-attribute 'default nil :family "Iosevka" :weight 'regular :height 120)
+  (set-face-attribute 'fixed-pitch nil :font "Iosevka" :weight 'regular :height 1.0)
   (set-face-attribute 'variable-pitch nil :font "Times New Roman" :height 120)
 #+END_SRC
 
@@ -609,7 +609,7 @@ The default mode line is ugly, so this package replaces it with one that looks l
           doom-modeline-bar-width 3))
 
   (custom-set-faces
-   '(mode-line ((t (:family "Iosevka Nerd Font" :height 120)))))
+   '(mode-line ((t (:family "Iosevka" :height 120)))))
 
   (use-package hide-mode-line
     :hook
@@ -765,6 +765,19 @@ We like table of contents, right?
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (use-package toc-org)
 #+end_src
+
+** SVG Tag Mode
+
+#+BEGIN_SRC emacs-lisp :tangle init.el
+  (use-package svg-tag-mode
+    :init
+    (setq svg-tag-tags
+      '(("TODO" . ((lambda (tag) (svg-tag-make "TODO"))))
+      ("IN PROGRESS" . ((lambda (tag) (svg-tag-make "IN PROGRESS"))))
+      ("CANCELLED" . ((lambda (tag) (svg-tag-make "CANCELLED"))))
+      ("DONE" . ((lambda (tag) (svg-tag-make "DONE"))))))
+    :hook org-mode)
+#+END_SRC
 
 ** Keywords
 Let's add our own custom keywords and highlight them.

@@ -130,8 +130,8 @@
 
 (setq text-scale-mode-step 1.1)
 
-(set-face-attribute 'default nil :family "Iosevka Nerd Font" :weight 'regular :height 120)
-(set-face-attribute 'fixed-pitch nil :font "Iosevka Nerd Font" :weight 'regular :height 1.0)
+(set-face-attribute 'default nil :family "Iosevka" :weight 'regular :height 120)
+(set-face-attribute 'fixed-pitch nil :font "Iosevka" :weight 'regular :height 1.0)
 (set-face-attribute 'variable-pitch nil :font "Times New Roman" :height 120)
 
 (setq-default indent-tabs-mode nil
@@ -371,7 +371,7 @@
         doom-modeline-bar-width 3))
 
 (custom-set-faces
- '(mode-line ((t (:family "Iosevka Nerd Font" :height 120)))))
+ '(mode-line ((t (:family "Iosevka" :height 120)))))
 
 (use-package hide-mode-line
   :hook
@@ -465,6 +465,15 @@
 (setq org-ellipsis " ⤵ ")
 
 (use-package toc-org)
+
+(use-package svg-tag-mode
+  :init
+  (setq svg-tag-tags
+    '(("TODO" . ((lambda (tag) (svg-tag-make "TODO"))))
+    ("IN PROGRESS" . ((lambda (tag) (svg-tag-make "IN PROGRESS"))))
+    ("CANCELLED" . ((lambda (tag) (svg-tag-make "CANCELLED"))))
+    ("DONE" . ((lambda (tag) (svg-tag-make "DONE"))))))
+  :hook org-mode)
 
 (setq org-todo-keywords
      '((sequence "TODO" "IN PROGRESS" "CANCELLED" "DONE")))

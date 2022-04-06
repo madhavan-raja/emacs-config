@@ -1,6 +1,7 @@
 #+TITLE: Emacs Configurations
 #+AUTHOR: Madhavan Raja
 
+* Introduction
 An Emacs configuration for note taking, documenting and development. Clone using:
 
 #+BEGIN_SRC bash :tangle no
@@ -16,6 +17,7 @@ Open =README.org= in Emacs and run:
 Lastly, restart Emacs.
 
 * Table of Contents :toc:
+- [[#introduction][Introduction]]
 - [[#packages][Packages]]
 - [[#window][Window]]
 - [[#behaviour][Behaviour]]

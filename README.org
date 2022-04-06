@@ -131,28 +131,28 @@ Set window title, start the application maximized and disable the startup screen
 #+END_SRC
 
 ** Backup files
-Disable the generation of backup files:
+Disable the generation of backup files.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (setq make-backup-files nil)
 #+END_SRC
 
 ** Notifications
-Disable the notifications:
+Disable the notifications.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (setq ring-bell-function 'ignore)
 #+END_SRC
 
-** ESC cancels the current command.
-Map the escape key to cancel the current command. Useful with =evil-mode=:
+** ESC cancels the current command
+Map the escape key to cancel the current command. Useful with =evil-mode=.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 #+END_SRC
 
-** Good scroll
-A smoother pixel-based scrolling:
+** Good Scroll
+A smoother pixel-based scrolling.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (use-package emacs
@@ -171,7 +171,7 @@ A smoother pixel-based scrolling:
 #+END_SRC
 
 ** Custom File
-Set the location of the custom files to =.custom= directory:
+Set the location of the custom files to =.custom= directory.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (setq custom-file (expand-file-name ".custom" user-emacs-directory))
@@ -186,7 +186,7 @@ Set the location of the custom files to =.custom= directory:
 #+END_SRC
 
 * Basic Visual Adjustments
-** Disable the scroll bar, menu bar, tool bar, tooltips, and the start screens.
+** Disable the scroll bar, menu bar, tool bar, tooltips, and the start screens
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (scroll-bar-mode -1)
   (menu-bar-mode -1)

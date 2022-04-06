@@ -1,6 +1,21 @@
 #+TITLE: Emacs Configurations
 #+AUTHOR: Madhavan Raja
 
+* Introduction
+An Emacs configuration for note taking, documenting and development. Clone using:
+
+#+BEGIN_SRC bash :tangle no
+  git clone https://github.com/madhavan-raja/emacs-config.git ~/.emacs.d
+#+END_SRC
+
+Open =README.org= in Emacs and run:
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  (org-babel-tangle)
+#+END_SRC
+
+Lastly, restart Emacs.
+
 * Table of Contents :toc:
 - [[#introduction][Introduction]]
 - [[#packages][Packages]]
@@ -58,21 +73,6 @@
   - [[#org-roam][Org Roam]]
 - [[#functions][Functions]]
   - [[#compilation][Compilation]]
-
-* Introduction
-An Emacs configuration for note taking, documenting and (potentially) development. Clone using:
-
-#+BEGIN_SRC bash :tangle no
-  git clone https://github.com/madhavan-raja/emacs-config.git ~/.emacs.d
-#+END_SRC
-
-Open =README.org= in Emacs and run:
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  (org-babel-tangle)
-#+END_SRC
-
-Lastly, restart Emacs.
 
 * Packages
 We set up melpa, use-package, and straight.el for installing package later on. Melpa has a lot more packages than the default elpa. Use-package is pretty /useful/ (pun intended) since packages can be automatically installed and lazy-loaded. Straight.el is for downloading packages from git repos. We also install the package =auto-package-update= to update installed packages.

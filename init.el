@@ -213,11 +213,6 @@
     "oeh" 'org-html-export-to-html
     "oem" 'org-man-export-to-man
     "oeu" 'org-publish-project
-    ; Roam
-    "orf" 'org-roam-node-find
-    "ori" 'org-roam-node-insert
-    "oru" 'org-roam-db-sync
-    "oro" 'orui-open
     ; Babel
     "obs" 'org-babel-execute-src-block
     "obb" 'org-babel-execute-buffer

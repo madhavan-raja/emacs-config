@@ -1,7 +1,6 @@
 #+TITLE: Emacs Configurations
 #+AUTHOR: Madhavan Raja
 
-* Introduction
 An Emacs configuration for note taking, documenting and development. Clone using:
 
 #+BEGIN_SRC bash :tangle no
@@ -17,60 +16,55 @@ Open =README.org= in Emacs and run:
 Lastly, restart Emacs.
 
 * Table of Contents :toc:
-- [[#introduction][Introduction]]
 - [[#packages][Packages]]
 - [[#window][Window]]
 - [[#behaviour][Behaviour]]
-  - [[#basic-settings][Basic settings]]
-  - [[#backup-files][Backup files]]
+  - [[#basic-settings][Basic Settings]]
+  - [[#backup-files][Backup Files]]
   - [[#notifications][Notifications]]
-  - [[#esc-cancels-the-current-command][ESC cancels the current command.]]
-  - [[#good-scroll][Good scroll]]
+  - [[#esc-cancels-the-current-command][Esc cancels the current command]]
+  - [[#good-scroll][Good Scroll]]
   - [[#custom-file][Custom File]]
 - [[#theme][Theme]]
 - [[#basic-visual-adjustments][Basic Visual Adjustments]]
-  - [[#disable-the-scroll-bar-menu-bar-tool-bar-tooltips-and-the-start-screens][Disable the scroll bar, menu bar, tool bar, tooltips, and the start screens.]]
+  - [[#disable-the-scroll-bar-menu-bar-tool-bar-tooltips-and-the-start-screens][Disable the scroll bar, menu bar, tool bar, tooltips, and the start screens]]
   - [[#prettify-things][Prettify Things]]
-  - [[#line-numbers][Line numbers]]
+  - [[#line-numbers][Line Numbers]]
   - [[#miscellaneous-minor-modes][Miscellaneous Minor Modes]]
 - [[#fonts][Fonts]]
 - [[#indentations][Indentations]]
 - [[#all-the-icons][All The Icons]]
   - [[#prerequisites][Prerequisites]]
-  - [[#package-installation][Package installation]]
+  - [[#package-installation][Package Installation]]
 - [[#evil-mode][Evil Mode]]
   - [[#base][Base]]
   - [[#collection][Collection]]
   - [[#evil-org][Evil Org]]
   - [[#leader][Leader]]
-  - [[#additional-keybindings][Additional keybindings]]
-  - [[#miscellaneous-settings][Miscellaneous settings]]
+  - [[#additional-keybindings][Additional Keybindings]]
+  - [[#miscellaneous-settings][Miscellaneous Settings]]
 - [[#additional-packages][Additional Packages]]
   - [[#which-key][Which Key]]
-  - [[#m-x-completion][M-x completion]]
-  - [[#tabs][Tabs]]
+  - [[#m-x-completion][M-x Completion]]
   - [[#neotree][Neotree]]
   - [[#magit][Magit]]
   - [[#parentheses][Parentheses]]
-  - [[#mode-line][Mode line]]
-  - [[#undo-tree][Undo-Tree]]
+  - [[#modeline][Modeline]]
+  - [[#undo-tree][Undo Tree]]
   - [[#formatter][Formatter]]
   - [[#lsp][LSP]]
   - [[#company][Company]]
   - [[#flycheck][Flycheck]]
   - [[#projectile][Projectile]]
-  - [[#dictionary][Dictionary]]
-  - [[#thesaurus][Thesaurus]]
 - [[#org-mode][Org Mode]]
-  - [[#org-download][Org-download]]
-  - [[#org-indent][Org-indent]]
-  - [[#pretty-entities][Pretty entities]]
-  - [[#org-bullets][Org bullets]]
+  - [[#org-download][Org Download]]
+  - [[#org-indent][Org Indent]]
+  - [[#pretty-entities][Pretty Entities]]
+  - [[#org-bullets][Org Bullets]]
   - [[#org-ellipses][Org Ellipses]]
   - [[#org-toc][Org TOC]]
-  - [[#org-agenda][Org Agenda]]
+  - [[#svg-tag-mode][SVG Tag Mode]]
   - [[#keywords][Keywords]]
-  - [[#org-roam][Org Roam]]
 - [[#functions][Functions]]
   - [[#compilation][Compilation]]
 
@@ -102,6 +96,7 @@ We set up melpa, use-package, and straight.el for installing package later on. M
            auto-package-update-interval 4)
      (auto-package-update-maybe))
 #+END_SRC
+
 * Window
 Set window title, start the application maximized and disable the startup screen.
 
@@ -112,7 +107,7 @@ Set window title, start the application maximized and disable the startup screen
 #+END_SRC
 
 * Behaviour
-** Basic settings
+** Basic Settings
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (setq-default
     delete-by-moving-to-trash t ;; Move to trash instead of deleting
@@ -130,7 +125,7 @@ Set window title, start the application maximized and disable the startup screen
     smooth-scroll-margin 1)
 #+END_SRC
 
-** Backup files
+** Backup Files
 Disable the generation of backup files.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
@@ -144,7 +139,7 @@ Disable the notifications.
   (setq ring-bell-function 'ignore)
 #+END_SRC
 
-** ESC cancels the current command
+** Esc cancels the current command
 Map the escape key to cancel the current command. Useful with =evil-mode=.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
@@ -235,7 +230,7 @@ This replaces some text with icons. Also ligatures.
   (global-prettify-symbols-mode)
 #+END_SRC
 
-** Line numbers
+** Line Numbers
 Display line numbers when programming.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
@@ -297,7 +292,7 @@ Install the fonts first by running:
   (all-the-icons-install-fonts)
 #+END_SRC
 
-** Package installation
+** Package Installation
 Install the package using:
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
@@ -418,7 +413,7 @@ This adds a leader key to Emacs, which is incredibly useful.
       "gs" 'magit-status))
 #+END_SRC
 
-** Additional keybindings
+** Additional Keybindings
 Here I bind some extra keybindings for evil mode.
     
 #+BEGIN_SRC emacs-lisp :tangle init.el
@@ -464,8 +459,8 @@ Here I bind some extra keybindings for evil mode.
   (evil-define-key 'normal global-map (kbd ",x") 'my/c-k)
 #+END_SRC
 
-** Miscellaneous settings
-*** Cursor shapes
+** Miscellaneous Settings
+*** Cursor Shapes
 Set the cursor shape for different evil states.
      
 #+BEGIN_SRC emacs-lisp :tangle init.el
@@ -479,7 +474,7 @@ Set the cursor shape for different evil states.
   (setq-default cursor-type 'bar)
 #+END_SRC
 
-*** Small additions
+*** Small Additions
 We want /some/ Emacs in evil, so we change a few settings here.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
@@ -500,7 +495,7 @@ We install which-key in case we ever forget any keybinds.
     (setq which-key-idle-delay 0.1))
 #+END_SRC
 
-** M-x completion
+** M-x Completion
 Vertico helps with better completion and to replace the default M-x. Consult adds a few things. Orderless adds fuzzy findings, marginalia adds stuff to your minibuffer.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
@@ -579,7 +574,7 @@ Most editors also automatically color matching parentheses, but we need to insta
     (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 #+END_SRC
 
-** Mode line
+** Modeline
 The default mode line is ugly, so this package replaces it with one that looks like the Doom mode line.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
@@ -713,21 +708,21 @@ Here, we install and configure projectile, which is a project interaction librar
 #+END_SRC
 
 * Org Mode
-** Org-download
+** Org Download
 Drag-and-drop images directly into Emacs!
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (use-package org-download)
 #+END_SRC
 
-** Org-indent
+** Org Indent
 Indent the contents of an Org document.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (add-hook 'org-mode-hook 'org-indent-mode)
 #+END_SRC
 
-** Pretty entities
+** Pretty Entities
 Renders a handful of LaTeX expressions.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el

@@ -47,20 +47,6 @@
 
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
-(use-package emacs
-  :custom
-  (redisplay-dont-pause            t) ;; Fully redraw the display before it processes queued input events.
-  (next-screen-context-lines       2) ;; Number of lines of continuity to retain when scrolling by full screens
-  (scroll-conservatively       10000) ;; only 'jump' when moving this far off the screen
-  (scroll-step                     1) ;; Keyboard scroll one line at a time
-  (mouse-wheel-progressive-speed nil) ;; Don't accelerate scrolling
-  (mouse-wheel-follow-mouse        t) ;; Scroll window under mouse
-  (fast-but-imprecise-scrolling    t) ;; No (less) lag while scrolling lots.
-  (auto-window-vscroll           nil)) ;; Cursor move faster
-
-(use-package good-scroll
-  :hook (after-init . good-scroll-mode))
-
 (setq custom-file (expand-file-name ".custom" user-emacs-directory))
 
 (use-package doom-themes

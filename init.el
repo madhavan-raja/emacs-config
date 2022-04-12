@@ -493,6 +493,8 @@
       ;; TODO / DONE
       ("TODO" . ((lambda (tag) (svg-tag-make "TODO" :face 'org-todo :inverse t :margin 0))))
       ("DONE" . ((lambda (tag) (svg-tag-make "DONE" :face 'org-done :margin 0))))
+      ("IN PROGRESS" . ((lambda (tag) (svg-tag-make "IN PROGRESS" :face 'org-done :margin 0))))
+      ("CANCELLED" . ((lambda (tag) (svg-tag-make "CANCELLED" :face 'org-done :margin 0))))
 
       ;; Citation of the form [cite:@Knuth:1984] 
 

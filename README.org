@@ -841,6 +841,7 @@ Let's add our own custom keywords and highlight them.
 A keybind for compilation.
 
 #+BEGIN_SRC emacs-lisp :tangle init.el
-  (global-set-key (kbd "<f9>") 'compile)
+  (global-set-key (kbd "S-<f9>") 'compile)
+  (global-set-key (kbd "<f9>") 'recompile)
 #+END_SRC
 

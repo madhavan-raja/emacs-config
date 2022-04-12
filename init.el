@@ -536,4 +536,5 @@
 (setq org-todo-keywords
      '((sequence "TODO" "IN PROGRESS" "CANCELLED" "DONE")))
 
-(global-set-key (kbd "<f9>") 'compile)
+(global-set-key (kbd "S-<f9>") 'compile)
+(global-set-key (kbd "<f9>") 'recompile)

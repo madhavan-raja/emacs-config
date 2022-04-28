@@ -116,9 +116,9 @@
 
 (setq text-scale-mode-step 1.1)
 
-(set-face-attribute 'default nil :family "Iosevka" :weight 'regular :height 120)
+(set-face-attribute 'default nil :family "Iosevka" :weight 'regular :height 130)
 (set-face-attribute 'fixed-pitch nil :font "Iosevka" :weight 'regular :height 1.0)
-(set-face-attribute 'variable-pitch nil :font "Times New Roman" :height 120)
+(set-face-attribute 'variable-pitch nil :font "Times New Roman" :height 130)
 
 (setq-default indent-tabs-mode nil
     tab-width 2)
@@ -352,7 +352,7 @@
         doom-modeline-bar-width 3))
 
 (custom-set-faces
- '(mode-line ((t (:family "Iosevka" :height 120)))))
+ '(mode-line ((t (:family "Iosevka" :height 110)))))
 
 (use-package hide-mode-line
   :hook
@@ -472,66 +472,66 @@
 
   (setq svg-tag-tags
     `(
-      ;; Org tags
+       ;; Org tags
 
-      (":\\([A-Za-z0-9]+\\)" . ((lambda (tag) (svg-tag-make tag))))
-      (":\\([A-Za-z0-9]+[ \-]\\)" . ((lambda (tag) tag)))
+       ; (":\\([A-Za-z0-9]+\\)" . ((lambda (tag) (svg-tag-make tag))))
+       ; (":\\([A-Za-z0-9]+[ \-]\\)" . ((lambda (tag) tag)))
 
-      ;; Task priority
+       ;; Task priority
 
-      ("\\[#[A-Z]\\]" . ( (lambda (tag)
-                            (svg-tag-make tag :face 'org-priority 
-                                          :beg 2 :end -1 :margin 0))))
+       ("\\[#[A-Z]\\]" . ( (lambda (tag)
+                             (svg-tag-make tag :face 'org-priority 
+                                           :beg 2 :end -1 :margin 0))))
 
-      ;; Progress
+       ;; Progress
 
-      ("\\(\\[[0-9]\\{1,3\\}%\\]\\)" . ((lambda (tag)
-                                          (svg-progress-percent (substring tag 1 -2)))))
-      ("\\(\\[[0-9]+/[0-9]+\\]\\)" . ((lambda (tag)
-                                        (svg-progress-count (substring tag 1 -1)))))
+       ("\\(\\[[0-9]\\{1,3\\}%\\]\\)" . ((lambda (tag)
+                                           (svg-progress-percent (substring tag 1 -2)))))
+       ("\\(\\[[0-9]+/[0-9]+\\]\\)" . ((lambda (tag)
+                                         (svg-progress-count (substring tag 1 -1)))))
 
-      ;; TODO / DONE
-      ("TODO" . ((lambda (tag) (svg-tag-make "TODO" :face 'org-todo :inverse t :margin 0))))
-      ("DONE" . ((lambda (tag) (svg-tag-make "DONE" :face 'org-done :margin 0))))
-      ("IN PROGRESS" . ((lambda (tag) (svg-tag-make "IN PROGRESS" :face 'org-done :margin 0))))
-      ("CANCELLED" . ((lambda (tag) (svg-tag-make "CANCELLED" :face 'org-done :margin 0))))
+       ;; TODO / DONE
+       ("TODO" . ((lambda (tag) (svg-tag-make "TODO" :face 'org-todo :inverse t :margin 0))))
+       ("DONE" . ((lambda (tag) (svg-tag-make "DONE" :face 'org-done :margin 0))))
+       ("IN PROGRESS" . ((lambda (tag) (svg-tag-make "IN PROGRESS" :face 'org-done :margin 0))))
+       ("CANCELLED" . ((lambda (tag) (svg-tag-make "CANCELLED" :face 'org-done :margin 0))))
 
-      ;; Citation of the form [cite:@Knuth:1984] 
+       ;; Citation of the form [cite:@Knuth:1984] 
 
-      ("\\(\\[cite:@[A-Za-z]+:\\)" . ((lambda (tag)
-                                        (svg-tag-make tag
-                                                      :inverse t
-                                                      :beg 7 :end -1
-                                                      :crop-right t))))
-      ("\\[cite:@[A-Za-z]+:\\([0-9]+\\]\\)" . ((lambda (tag)
-                                              (svg-tag-make tag
-                                                            :end -1
-                                                            :crop-left t))))
+       ("\\(\\[cite:@[A-Za-z]+:\\)" . ((lambda (tag)
+                                         (svg-tag-make tag
+                                                       :inverse t
+                                                       :beg 7 :end -1
+                                                       :crop-right t))))
+       ("\\[cite:@[A-Za-z]+:\\([0-9]+\\]\\)" . ((lambda (tag)
+                                               (svg-tag-make tag
+                                                             :end -1
+                                                             :crop-left t))))
 
-      ;; Active date (without day name, with or without time)
+       ;; Active date (without day name, with or without time)
 
-      (,(format "\\(<%s>\\)" date-re) .
-       ((lambda (tag)
-          (svg-tag-make tag :beg 1 :end -1 :margin 0))))
-      (,(format "\\(<%s *\\)%s>" date-re time-re) .
-       ((lambda (tag)
-          (svg-tag-make tag :beg 1 :inverse nil :crop-right t :margin 0))))
-      (,(format "<%s *\\(%s>\\)" date-re time-re) .
-       ((lambda (tag)
-          (svg-tag-make tag :end -1 :inverse t :crop-left t :margin 0))))
-
-      ;; Inactive date (without day name, with or without time)
-
-       (,(format "\\(\\[%s\\]\\)" date-re) .
+       (,(format "\\(<%s>\\)" date-re) .
         ((lambda (tag)
-           (svg-tag-make tag :beg 1 :end -1 :margin 0 :face 'org-date))))
-       (,(format "\\(\\[%s *\\)%s\\]" date-re time-re) .
+           (svg-tag-make tag :beg 1 :end -1 :margin 0))))
+       (,(format "\\(<%s *\\)%s>" date-re time-re) .
         ((lambda (tag)
-           (svg-tag-make tag :beg 1 :inverse nil :crop-right t :margin 0 :face 'org-date))))
-       (,(format "\\[%s *\\(%s\\]\\)" date-re time-re) .
+           (svg-tag-make tag :beg 1 :inverse nil :crop-right t :margin 0))))
+       (,(format "<%s *\\(%s>\\)" date-re time-re) .
         ((lambda (tag)
-           (svg-tag-make tag :end -1 :inverse t :crop-left t :margin 0 :face 'org-date))))))
-  :hook org-mode)
+           (svg-tag-make tag :end -1 :inverse t :crop-left t :margin 0))))
+
+       ;; Inactive date (without day name, with or without time)
+
+        (,(format "\\(\\[%s\\]\\)" date-re) .
+         ((lambda (tag)
+            (svg-tag-make tag :beg 1 :end -1 :margin 0 :face 'org-date))))
+        (,(format "\\(\\[%s *\\)%s\\]" date-re time-re) .
+         ((lambda (tag)
+            (svg-tag-make tag :beg 1 :inverse nil :crop-right t :margin 0 :face 'org-date))))
+        (,(format "\\[%s *\\(%s\\]\\)" date-re time-re) .
+         ((lambda (tag)
+            (svg-tag-make tag :end -1 :inverse t :crop-left t :margin 0 :face 'org-date))))))
+    :hook org-mode)
 
 (setq org-todo-keywords
      '((sequence "TODO" "IN PROGRESS" "CANCELLED" "DONE")))

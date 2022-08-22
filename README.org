@@ -250,9 +250,9 @@ Set font and fringe background color:
 #+BEGIN_SRC emacs-lisp :tangle init.el
   (setq text-scale-mode-step 1.1)
 
-  (set-face-attribute 'default nil :family "Iosevka" :weight 'regular :height 130)
+  (set-face-attribute 'default nil :family "Iosevka" :weight 'regular :height 140)
   (set-face-attribute 'fixed-pitch nil :font "Iosevka" :weight 'regular :height 1.0)
-  (set-face-attribute 'variable-pitch nil :font "Times New Roman" :height 130)
+  (set-face-attribute 'variable-pitch nil :font "Times New Roman" :height 140)
 #+END_SRC
 
 * Indentations

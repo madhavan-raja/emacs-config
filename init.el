@@ -51,7 +51,7 @@
 
 (use-package doom-themes
   :config
-  (load-theme 'doom-dark+ t)
+  (load-theme 'doom-gruvbox t)
   (doom-themes-neotree-config))
 
 (scroll-bar-mode -1)
